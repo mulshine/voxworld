@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist>
+  <dict>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app requires audio input. If you do not have an audio interface connected it will use the built-in microphone.</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <true/>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    <key>CFBundleExecutable</key>
+    <string>${EXECUTABLE_NAME}</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.mike.voxworld.voxworldAUv3</string>
+    <key>CFBundleName</key>
+    <string>voxworld</string>
+    <key>CFBundleDisplayName</key>
+    <string>voxworld</string>
+    <key>CFBundlePackageType</key>
+    <string>XPC!</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.1</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.1</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>Mike</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSExtension</key>
+    <dict>
+      <key>NSExtensionPrincipalClass</key>
+      <string>LEAFAUFactoryAUv3</string>
+      <key>NSExtensionPointIdentifier</key>
+      <string>com.apple.AudioUnit-UI</string>
+      <key>NSExtensionAttributes</key>
+      <dict>
+        <key>AudioComponents</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>mike: voxworld</string>
+            <key>description</key>
+            <string>voxworld</string>
+            <key>factoryFunction</key>
+            <string>LEAFAUFactoryAUv3</string>
+            <key>manufacturer</key>
+            <string>Mike</string>
+            <key>type</key>
+            <string>aufx</string>
+            <key>subtype</key>
+            <string>aUto</string>
+            <key>version</key>
+            <integer>65537</integer>
+            <key>sandboxSafe</key>
+            <true/>
+            <key>tags</key>
+            <array>
+              <string>Effects</string>
+            </array>
+          </dict>
+        </array>
+      </dict>
+    </dict>
+  </dict>
+</plist>

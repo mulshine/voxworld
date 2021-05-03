@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "980988F2-A9E3-4430-B506-473E00E68F5B"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D350A415-94E3-46C1-826B-C795ADAC0726"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../JUCE/modules/juce_audio_basics/buffers/juce_AudioSampleBuffer.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "AudioBuffer"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "D350A415-94E3-46C1-826B-C795ADAC0726 - 1e4e8cc0d6ac77d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "juce::AudioBuffer&lt;float&gt;::getReadPointer(int) const"
+                  moduleName = "leaf-autotune"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/airship/JUCE/modules/juce_audio_basics/buffers/juce_AudioSampleBuffer.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "297"
+                  endingLineNumber = "297"
+                  offsetFromSymbolStart = "125">
+               </Location>
+               <Location
+                  uuid = "D350A415-94E3-46C1-826B-C795ADAC0726 - 78cd6602d78a01e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "juce::AudioBuffer&lt;double&gt;::getReadPointer(int) const"
+                  moduleName = "leaf-autotune"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/airship/JUCE/modules/juce_audio_basics/buffers/juce_AudioSampleBuffer.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "297"
+                  endingLineNumber = "297"
+                  offsetFromSymbolStart = "125">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
