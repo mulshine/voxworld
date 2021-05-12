@@ -41,12 +41,21 @@ int blockSize = 128;
 float rms = 0.0;
 
 tTapeDelay delay;
-float delayLast = 0.0;
 float delayFeedback = 0.1;
 float delayTime = 0.1;
 
 tSVF delayLPF;
 float delayLPF_cutoff;
+
+tSimpleRetune retune;
+float freq;
+int root = C, scale = MAJOR;
+float inputFreq = 0.0;
+float inputMidi = 0.0;
+float lastInputMidi = 0.0;
+float tuneTo = 0.0;
+
+tFormantShifter formant;
 
 float VoxWorld_getDelayTime(void) { return delayTime; }
 float VoxWorld_getDelayFeedback(void)  { return delayFeedback; }
@@ -64,29 +73,16 @@ void VoxWorld_setDelayFeedback(float fb)
 
 LEAF leaf;
 
-tSimpleRetune retune;
-
-
-#define NUM_BANDS 10
-tSVF eq[NUM_BANDS];
 
 
 
 
-
-float freq;
-
-#define MSIZE 4048000
+#define MSIZE 0
 char memory[MSIZE];
 
 int lastLoadedAudioSize = 0;
 
-int root = C, scale = MAJOR;
 
-float inputFreq = 0.0;
-float inputMidi = 0.0;
-float lastInputMidi = 0.0;
-float tuneTo = 0.0;
 
 void setRootAndScale(int newRoot, int newScale)
 {
@@ -140,32 +136,11 @@ float tune(float note)
     return 12.0 * octave + (float) root + transp;
 }
 
-float bandHz[20] =
+void formant_transpose(float transp)
 {
-    50,
-    100,
-    200,
-    400,
-    800,
-    
-    1600,
-    2400,
-    3200,
-    4000,
-    4800,
-    
-    5600,
-    6600,
-    7600,
-    9600,
-    11600,
-    
-    13600,
-    15600,
-    17600,
-    19600,
-    21000
-};
+    tFormantShifter_setShiftFactor(&formant, mtof(60+transp)/mtof(60));
+}
+#define FORMANT_ORDER 15
 
 void    VoxWorld_init            (float sr, int bs)
 {
@@ -177,48 +152,48 @@ void    VoxWorld_init            (float sr, int bs)
     tSimpleRetune_setMode(&retune, 1);
     tSimpleRetune_setPickiness(&retune, 0.9);
     
+    tFormantShifter_init(&formant, FORMANT_ORDER, &leaf);
+    formant_transpose(7.0);
+    //tFormantShifter_setIntensity(&formant, 3.0);
+    
     tTapeDelay_init(&delay, 0.1*sampleRate, 2.0*sampleRate, &leaf);
     
     tSVF_init(&delayLPF, SVFTypeLowpass, 2500, 1.0, &leaf);
     
-    for (int i = 0; i < NUM_BANDS; i++)
-    {
-        tSVF_init(&eq[i], SVFTypePeak, bandHz[i], 1.0, &leaf);
-    }
-
+    
     setRootAndScale(C, MAJOR);
 
 }
 #define RETUNE 0
+#define FORMANT 1
+#define DELAY 0
 
 float samp = 0.0;
+float retune_out = 0.0;
+float formant_out = 0.0;
+float delay_out = 0.0;
+float mix = 1.0;
 float   VoxWorld_tick            (float input)
 {
 #if RETUNE
     inputFreq = tSimpleRetune_getInputFrequency(&retune);
     inputMidi = ftom(inputFreq);
     
-    //if (fabsf(inputMidi-lastInputMidi) > 0.00)
-    {
-        tuneTo = mtof(tune(inputMidi));
-    }
-    lastInputMidi = inputMidi;
-    
+    tuneTo = mtof(tune(inputMidi));
+
     tSimpleRetune_tuneVoice(&retune, 0, tuneTo);
     
-    float retune = tSimpleRetune_tick(&retune, input);
+    retune_out = tSimpleRetune_tick(&retune, input);
+#endif
+#if FORMANT
+    formant_out = tFormantShifter_tick(&formant, input);
+
+#endif
+#if DELAY
+    delay_out = tTapeDelay_tick(&delay, input + tSVF_tick(&delayLPF, delayOut*delayFeedback));
 #endif
     
-    samp = input;
-    /*
-    for (int i = 0; i < NUM_BANDS; i++)
-    {
-        samp = tSVF_tick(&eq[i], samp);
-    }
-    */
-    delayLast = tTapeDelay_tick(&delay, input + tSVF_tick(&delayLPF, delayLast*delayFeedback));
-    
-    return input*0.8 + delayLast*0.2;
+    return mix * ((delay_out + formant_out + retune_out) / (RETUNE + FORMANT + DELAY)) + (1.0-mix) * input;
 }
 
 int firstFrame = 1;

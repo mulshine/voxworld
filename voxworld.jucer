@@ -85,20 +85,29 @@
         <FILE id="wbnjmF" name="Yin.cpp" compile="1" resource="0" file="Source/Yin.cpp"/>
       </GROUP>
       <GROUP id="{5EAA8994-9CCF-AFE1-27F3-6B2132200B97}" name="VoxWorld">
-        <FILE id="tMqyvm" name="ConstantQEqualizer.hpp" compile="0" resource="0"
-              file="Source/ConstantQEqualizer.hpp"/>
         <FILE id="R9R9N2" name="Globals.h" compile="0" resource="0" file="Source/Globals.h"/>
-        <FILE id="oQ7Hdj" name="UIComponent.h" compile="0" resource="0" file="Source/UIComponent.h"/>
-        <FILE id="ONd1SP" name="UIComponent.cpp" compile="1" resource="0" file="Source/UIComponent.cpp"/>
         <FILE id="L2MQTe" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
         <FILE id="euDngN" name="PluginEditor.cpp" compile="1" resource="0"
               file="Source/PluginEditor.cpp"/>
-        <FILE id="xGEfAX" name="VoxWorld.h" compile="0" resource="0" file="Source/VoxWorld.h"/>
-        <FILE id="PGmAOc" name="VoxWorld.cpp" compile="1" resource="0" file="Source/VoxWorld.cpp"/>
         <FILE id="EnmsIi" name="PluginProcessor.h" compile="0" resource="0"
               file="Source/PluginProcessor.h"/>
         <FILE id="xwxe1U" name="PluginProcessor.cpp" compile="1" resource="0"
               file="Source/PluginProcessor.cpp"/>
+        <GROUP id="{245B364D-2423-C65C-28E9-FED063691A2A}" name="Visual">
+          <FILE id="oQ7Hdj" name="UIComponent.h" compile="0" resource="0" file="Source/UIComponent.h"/>
+          <FILE id="ONd1SP" name="UIComponent.cpp" compile="1" resource="0" file="Source/UIComponent.cpp"/>
+          <FILE id="QUPidj" name="GLComponent1.h" compile="0" resource="0" file="Source/GLComponent1.h"/>
+          <FILE id="HjJscQ" name="GLComponent1.cpp" compile="1" resource="0"
+                file="Source/GLComponent1.cpp"/>
+          <FILE id="lFmkEz" name="SkyDot.h" compile="0" resource="0" file="Source/SkyDot.h"/>
+          <FILE id="HZoYuF" name="SkyDot.cpp" compile="1" resource="0" file="Source/SkyDot.cpp"/>
+        </GROUP>
+        <GROUP id="{78F4705A-F0E3-D0BC-3E76-F0D92374C955}" name="Audio">
+          <FILE id="xGEfAX" name="VoxWorld.h" compile="0" resource="0" file="Source/VoxWorld.h"/>
+          <FILE id="PGmAOc" name="VoxWorld.cpp" compile="1" resource="0" file="Source/VoxWorld.cpp"/>
+          <FILE id="tMqyvm" name="ConstantQEqualizer.hpp" compile="0" resource="0"
+                file="Source/ConstantQEqualizer.hpp"/>
+        </GROUP>
       </GROUP>
     </GROUP>
   </MAINGROUP>

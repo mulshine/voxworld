@@ -1851,7 +1851,7 @@ float tFormantShifter_remove(tFormantShifter* const fsr, float in)
 {
     _tFormantShifter* fs = *fsr;
     in = tFeedbackLeveler_tick(&fs->fbl1, in);
-    in = tHighpass_tick(&fs->hp, in * fs->intensity);
+    in = tHighpass_tick(&fs->hp, in /** fs->intensity*/);
     
 
     float fa, fb, fc, foma, falph, ford, flamb, tf, fk;
@@ -1980,7 +1980,7 @@ float tFormantShifter_add(tFormantShifter* const fsr, float in)
     //tf = tFeedbackLeveler_tick(&fs->fbl2, tf);
     tf = tHighpass_tick(&fs->hp2, tanhf(tf));
 
-    return tf * fs->invIntensity;
+    return tf /* * fs->invIntensity */;
 }
 
 // 1.0f is no change, 2.0f is an octave up, 0.5f is an octave down

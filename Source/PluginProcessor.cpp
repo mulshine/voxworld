@@ -67,7 +67,7 @@ void VoxWorldAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
          float* outPointerL = buffer.getWritePointer( 0);
          float* outPointerR = buffer.getWritePointer( 1);
         
-        eq->compute(buffer.getNumSamples(), inPointerL, outPointerL);
+         eq->compute(buffer.getNumSamples(), inPointerL, outPointerL);
          
          for (int samp = 0; samp < buffer.getNumSamples(); ++samp)
          {
@@ -81,7 +81,7 @@ void VoxWorldAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
          
          float* outPointerL = buffer.getWritePointer( 0);
         
-        eq->compute(buffer.getNumSamples(), inPointerL, outPointerL);
+         eq->compute(buffer.getNumSamples(), inPointerL, outPointerL);
          
          for (int samp = 0; samp < buffer.getNumSamples(); ++samp)
          {

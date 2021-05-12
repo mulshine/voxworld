@@ -20,6 +20,12 @@
     <Filter Include="voxworld\Source\External">
       <UniqueIdentifier>{101290BC-F4DC-46F0-757E-73C6697C9EED}</UniqueIdentifier>
     </Filter>
+    <Filter Include="voxworld\Source\VoxWorld\Visual">
+      <UniqueIdentifier>{3B0BC1D7-D345-CA64-0272-8B65722BD30E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voxworld\Source\VoxWorld\Audio">
+      <UniqueIdentifier>{7E1C0EDB-1E0A-758F-8FDE-88DEA0567E27}</UniqueIdentifier>
+    </Filter>
     <Filter Include="voxworld\Source\VoxWorld">
       <UniqueIdentifier>{BE89666B-2193-D7CC-C8B0-321B0BAF0FAA}</UniqueIdentifier>
     </Filter>
@@ -553,17 +559,23 @@
     <ClCompile Include="..\..\Source\Yin.cpp">
       <Filter>voxworld\Source\External</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\UIComponent.cpp">
-      <Filter>voxworld\Source\VoxWorld</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\PluginEditor.cpp">
-      <Filter>voxworld\Source\VoxWorld</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\VoxWorld.cpp">
       <Filter>voxworld\Source\VoxWorld</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
       <Filter>voxworld\Source\VoxWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UIComponent.cpp">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GLComponent1.cpp">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SkyDot.cpp">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\VoxWorld.cpp">
+      <Filter>voxworld\Source\VoxWorld\Audio</Filter>
     </ClCompile>
     <ClCompile Include="C:\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
@@ -2769,23 +2781,29 @@
     <ClInclude Include="..\..\Source\Yin.h">
       <Filter>voxworld\Source\External</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\ConstantQEqualizer.hpp">
-      <Filter>voxworld\Source\VoxWorld</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Globals.h">
-      <Filter>voxworld\Source\VoxWorld</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\UIComponent.h">
       <Filter>voxworld\Source\VoxWorld</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginEditor.h">
       <Filter>voxworld\Source\VoxWorld</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\VoxWorld.h">
-      <Filter>voxworld\Source\VoxWorld</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\PluginProcessor.h">
       <Filter>voxworld\Source\VoxWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UIComponent.h">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GLComponent1.h">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SkyDot.h">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\VoxWorld.h">
+      <Filter>voxworld\Source\VoxWorld\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ConstantQEqualizer.hpp">
+      <Filter>voxworld\Source\VoxWorld\Audio</Filter>
     </ClInclude>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">
       <Filter>JUCE Modules\juce_audio_basics\audio_play_head</Filter>

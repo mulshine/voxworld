@@ -13,7 +13,7 @@
 
 #include "PluginProcessor.h"
 
-#include "UIComponent.h"
+#include "SkyDot.h"
 
 //==============================================================================
 /**

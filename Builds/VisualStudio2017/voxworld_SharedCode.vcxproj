@@ -159,10 +159,12 @@
     <ClCompile Include="..\..\LEAF\leaf\leaf.cpp"/>
     <ClCompile Include="..\..\Source\LEAFLink.cpp"/>
     <ClCompile Include="..\..\Source\Yin.cpp"/>
-    <ClCompile Include="..\..\Source\UIComponent.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
-    <ClCompile Include="..\..\Source\VoxWorld.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
+    <ClCompile Include="..\..\Source\UIComponent.cpp"/>
+    <ClCompile Include="..\..\Source\GLComponent1.cpp"/>
+    <ClCompile Include="..\..\Source\SkyDot.cpp"/>
+    <ClCompile Include="..\..\Source\VoxWorld.cpp"/>
     <ClCompile Include="C:\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2163,12 +2165,14 @@
     <ClInclude Include="..\..\LEAF\leaf\leaf.h"/>
     <ClInclude Include="..\..\Source\LEAFLink.h"/>
     <ClInclude Include="..\..\Source\Yin.h"/>
-    <ClInclude Include="..\..\Source\ConstantQEqualizer.hpp"/>
     <ClInclude Include="..\..\Source\Globals.h"/>
-    <ClInclude Include="..\..\Source\UIComponent.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
-    <ClInclude Include="..\..\Source\VoxWorld.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
+    <ClInclude Include="..\..\Source\UIComponent.h"/>
+    <ClInclude Include="..\..\Source\GLComponent1.h"/>
+    <ClInclude Include="..\..\Source\SkyDot.h"/>
+    <ClInclude Include="..\..\Source\VoxWorld.h"/>
+    <ClInclude Include="..\..\Source\ConstantQEqualizer.hpp"/>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
