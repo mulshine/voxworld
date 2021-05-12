@@ -54,8 +54,15 @@ float inputFreq = 0.0;
 float inputMidi = 0.0;
 float lastInputMidi = 0.0;
 float tuneTo = 0.0;
+float tuneBy = 0.0;
 
 tFormantShifter formant;
+
+
+#define NUM_VOICES 3
+tFormantShifter formants[NUM_VOICES];
+tRetune retunes;
+
 
 float VoxWorld_getDelayTime(void) { return delayTime; }
 float VoxWorld_getDelayFeedback(void)  { return delayFeedback; }
@@ -148,19 +155,18 @@ void    VoxWorld_init            (float sr, int bs)
     blockSize = bs;
     LEAF_init(&leaf, sampleRate, memory, MSIZE, &getRandomFloat);
     
-    tSimpleRetune_init(&retune, 1, 100, 500, 512, &leaf);
-    tSimpleRetune_setMode(&retune, 1);
+    tSimpleRetune_init(&retune, 1, 90, 1000, 512, &leaf);
+    tSimpleRetune_setMode(&retune, 0);
     tSimpleRetune_setPickiness(&retune, 0.9);
     
     tFormantShifter_init(&formant, FORMANT_ORDER, &leaf);
-    formant_transpose(7.0);
+    formant_transpose(3.0);
     //tFormantShifter_setIntensity(&formant, 3.0);
     
     tTapeDelay_init(&delay, 0.1*sampleRate, 2.0*sampleRate, &leaf);
     
     tSVF_init(&delayLPF, SVFTypeLowpass, 2500, 1.0, &leaf);
-    
-    
+
     setRootAndScale(C, MAJOR);
 
 }
@@ -186,7 +192,12 @@ float   VoxWorld_tick            (float input)
     retune_out = tSimpleRetune_tick(&retune, input);
 #endif
 #if FORMANT
-    formant_out = tFormantShifter_tick(&formant, input);
+
+    tuneBy = mtof(67)/mtof(60);
+    
+    tSimpleRetune_tuneVoice(&retune, 0, tuneBy);
+    float retuned = tSimpleRetune_tick(&retune, input);
+    formant_out = tFormantShifter_tick(&formant, retuned);
 
 #endif
 #if DELAY
@@ -200,6 +211,7 @@ int firstFrame = 1;
 bool lastState = false, lastPlayState = false;
 void    VoxWorld_block           (AudioSampleBuffer& buffer)
 {
+    //DBG(tuneBy);
 }
 
 void    VoxWorld_controllerInput (int cnum, float cval)
