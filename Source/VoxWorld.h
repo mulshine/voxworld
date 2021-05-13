@@ -18,7 +18,7 @@
 
 // VoxWorld API
 
-float   VoxWorld_tick            (float input);
+float*   VoxWorld_tick            (float input);
 void    VoxWorld_init            (float sampleRate, int blocksize);
 void    VoxWorld_end             (void);
 void    VoxWorld_block           (AudioSampleBuffer& buffer);
@@ -26,11 +26,12 @@ void    VoxWorld_block           (AudioSampleBuffer& buffer);
 void    VoxWorld_noteOn          (int midiNoteNumber, float velocity);
 void    VoxWorld_noteOff         (int midiNoteNumber);
 
-float VoxWorld_getDelayTime(void);
-float VoxWorld_getDelayFeedback(void);
 
-void VoxWorld_setDelayTime(float time);
-void VoxWorld_setDelayFeedback(float fb);
+float VoxWorld_getDelayTime(int chan);
+float VoxWorld_getDelayFeedback(int chan);
+
+void VoxWorld_setDelayTime(int chan, float time);
+void VoxWorld_setDelayFeedback(int chan, float fb);
 
 
 

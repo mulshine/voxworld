@@ -71,8 +71,9 @@ void VoxWorldAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
          
          for (int samp = 0; samp < buffer.getNumSamples(); ++samp)
          {
-             outPointerL[samp] = VoxWorld_tick( outPointerL[samp] );
-             outPointerR[samp] = outPointerL[samp];
+             float* tick = VoxWorld_tick( outPointerL[samp] );
+             outPointerL[samp] = tick[0];
+             outPointerR[samp] = tick[1];
          }
     }
     else if (totalNumInputChannels == 1)
@@ -85,7 +86,8 @@ void VoxWorldAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
          
          for (int samp = 0; samp < buffer.getNumSamples(); ++samp)
          {
-             outPointerL[samp] = VoxWorld_tick(outPointerL[samp]);
+             float* tick = VoxWorld_tick( outPointerL[samp] );
+             outPointerL[samp] = (tick[0]+tick[1]) * 0.5;
          }
     }
     else

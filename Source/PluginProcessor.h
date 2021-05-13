@@ -28,11 +28,11 @@ public:
     
     inline float getInputRMS(void) {return rms;}
     
-    inline void VW_setDelayFeedback(float fb) { VoxWorld_setDelayFeedback(fb);};
-    inline void VW_setDelayTime(float time) { VoxWorld_setDelayTime(time);};
+    inline void VW_setDelayFeedback(int chan, float fb) { VoxWorld_setDelayFeedback(chan, fb);};
+    inline void VW_setDelayTime(int chan, float time) { VoxWorld_setDelayTime(chan, time);};
     
-    inline float VW_getDelayFeedback(void) { return VoxWorld_getDelayFeedback(); }
-    inline float VW_getDelayTime(void) { return VoxWorld_getDelayTime(); }
+    inline float VW_getDelayFeedback(int chan) { return VoxWorld_getDelayFeedback(chan); }
+    inline float VW_getDelayTime(int chan) { return VoxWorld_getDelayTime(chan); }
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;

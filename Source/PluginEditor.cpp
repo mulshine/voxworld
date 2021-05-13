@@ -46,15 +46,19 @@ void VoxWorldAudioProcessorEditor::mouseDown (const MouseEvent& event)
         dot->setCentrePosition(event.x, event.y);
         addAndMakeVisible(dot);
 
-        float fb = VoxWorld_getDelayFeedback()*1.2;
-        if (fb > 0.95) fb = 0.95;
-        DBG("feedback: " + String(fb));
-        VoxWorld_setDelayFeedback(fb);
+        for (int i = 0; i < 2; i++)
+        {
+            float fb = VoxWorld_getDelayFeedback(i)*1.2;
+            if (fb > 0.95) fb = 0.95;
+            DBG("feedback " + String(i) + ": " + String(fb));
+            VoxWorld_setDelayFeedback(i,fb);
+            
+            float time = VoxWorld_getDelayTime(i)*1.05;
+            if (time > 1.0) time = 1.0;
+            DBG("time " + String(i) + ": " + String(time));
+            VoxWorld_setDelayTime(i,fb);
+        }
         
-        float time = VoxWorld_getDelayTime()*1.05;
-        if (time > 1.0) time = 1.0;
-        DBG("time: " + String(time));
-        VoxWorld_setDelayTime(fb);
     }
    
 }
