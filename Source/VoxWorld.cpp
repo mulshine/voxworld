@@ -46,7 +46,6 @@ LEAF leaf;
 #define RIGHT 1
 #define NUM_CHANNELS 2
 
-
 #define NUM_VOICES 4
 tFormantShifter formant[NUM_VOICES];
 
@@ -71,7 +70,8 @@ float pitchRatios[NUM_VOICES] = {1.0,1.0,1.0,1.0};
 tTapeDelay delay[NUM_CHANNELS];
 float delayTime[NUM_CHANNELS] = {0.4, 0.35};
 float delayFeedback[NUM_CHANNELS] = {0.85, 0.725};
-float delayMix = 0.5;
+float delayMix = 0.4;
+float mix = 0.825;
 
 #define MSIZE 0
 char memory[MSIZE];
@@ -179,8 +179,7 @@ void    VoxWorld_init            (float sr, int bs)
 float samp = 0.0;
 float retune_out = 0.0;
 float formant_out = 0.0;
-float delay_out = 0.0;
-float mix = 0.6;
+float delay_out = 0.0;;
 float lastOut[2] = {0.0,0.0};
 float out[2] = {0.0,0.0};
 float*   VoxWorld_tick            (float input)
