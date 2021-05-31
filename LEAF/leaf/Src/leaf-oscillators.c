@@ -7,12 +7,10 @@
 #if _WIN32 || _WIN64
 
 #include "..\Inc\leaf-oscillators.h"
-#include "..\leaf.h"
 
 #else
 
 #include "../Inc/leaf-oscillators.h"
-#include "../leaf.h"
 
 #endif
 

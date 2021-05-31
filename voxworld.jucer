@@ -20,7 +20,6 @@
         <GROUP id="{6B0932C0-757B-2423-743F-B2203DA09710}" name="Externals">
           <FILE id="AlQyPw" name="d_fft_mayer.c" compile="1" resource="0" file="LEAF/leaf/Externals/d_fft_mayer.c"/>
           <FILE id="mWWCOo" name="d_fft_mayer.h" compile="0" resource="0" file="LEAF/leaf/Externals/d_fft_mayer.h"/>
-          <FILE id="ksLGuz" name="trigtbl.h" compile="0" resource="0" file="LEAF/leaf/Externals/trigtbl.h"/>
         </GROUP>
         <GROUP id="{F9B34141-07B6-40DA-B1F1-6A8BA0D148FD}" name="Inc">
           <FILE id="RAtHEz" name="leaf-analysis.h" compile="0" resource="0" file="LEAF/leaf/Inc/leaf-analysis.h"/>

@@ -2712,9 +2712,6 @@
     <ClInclude Include="..\..\LEAF\leaf\Externals\d_fft_mayer.h">
       <Filter>voxworld\Source\leaf\Externals</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\LEAF\leaf\Externals\trigtbl.h">
-      <Filter>voxworld\Source\leaf\Externals</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\LEAF\leaf\Inc\leaf-analysis.h">
       <Filter>voxworld\Source\leaf\Inc</Filter>
     </ClInclude>

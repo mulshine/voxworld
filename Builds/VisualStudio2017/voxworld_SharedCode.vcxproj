@@ -2142,7 +2142,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\LEAF\leaf\Externals\d_fft_mayer.h"/>
-    <ClInclude Include="..\..\LEAF\leaf\Externals\trigtbl.h"/>
     <ClInclude Include="..\..\LEAF\leaf\Inc\leaf-analysis.h"/>
     <ClInclude Include="..\..\LEAF\leaf\Inc\leaf-delay.h"/>
     <ClInclude Include="..\..\LEAF\leaf\Inc\leaf-distortion.h"/>

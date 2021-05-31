@@ -38,8 +38,6 @@ static void run_pool_test(void);
 float sampleRate = 44100;
 int blockSize = 128;
 
-float rms = 0.0;
-
 LEAF leaf;
 
 #define LEFT 0
@@ -71,12 +69,21 @@ tTapeDelay delay[NUM_CHANNELS];
 float delayTime[NUM_CHANNELS] = {0.4, 0.35};
 float delayFeedback[NUM_CHANNELS] = {0.85, 0.725};
 float delayMix = 0.4;
-float mix = 0.825;
+float mix = 0.7;
 
-#define MSIZE 0
-char memory[MSIZE];
+tVocoder vocoder;
+
+tDualPitchDetector detector;
+tEnvelopeFollower follower; 
+
+tSawtooth saw[2];
+tRamp sawFreq;
+
+tRamp gain;
 
 int lastLoadedAudioSize = 0;
+
+char memory[1];
 
 void setRootAndScale(int newRoot, int newScale)
 {
@@ -135,8 +142,7 @@ float getFrequencyRatio(float midiTranspose)
     return mtof(60+midiTranspose)/mtof(60);
 }
 
-void setFormantTransposition(int which, float transp)
-{
+void setFormantTransposition(int which, float transp){
     tFormantShifter_setShiftFactor(&formant[which], getFrequencyRatio(transp));
 }
 
@@ -148,29 +154,30 @@ void setPitchTransposition(int which, float transp)
 
 #define FORMANT_ORDER 15
 
+#define DETECT_BUFSIZE 512
+float inBuffer[DETECT_BUFSIZE];
 
 void    VoxWorld_init            (float sr, int bs)
 {
     sampleRate = sr;
     blockSize = bs;
-    LEAF_init(&leaf, sampleRate, memory, MSIZE, &getRandomFloat);
+    LEAF_init(&leaf, sampleRate, memory, 1, &getRandomFloat);
     
-    tRetune_init(&retune, NUM_VOICES, 90, 1000, 512, &leaf);
-    tRetune_setMode(&retune, 0);
-    tRetune_setPickiness(&retune, 0.92);
+    tVocoder_init(&vocoder, &leaf);
     
-    for (int i = 0; i < NUM_VOICES; i++)
-    {
-        tFormantShifter_init(&formant[i], FORMANT_ORDER, &leaf);
-        setFormantTransposition(i, formantShifts[i]);
-        
-        setPitchTransposition(i, pitchShifts[i]);
-    }
-   
-    tTapeDelay_init(&delay[LEFT], delayTime[LEFT]*sampleRate, 2.0*sampleRate, &leaf);
-    tTapeDelay_init(&delay[RIGHT], delayTime[RIGHT]*sampleRate, 2.0*sampleRate, &leaf);
+    tDualPitchDetector_init(&detector, 80, 1000, inBuffer, DETECT_BUFSIZE, &leaf);
+    tDualPitchDetector_setPeriodicityThreshold(&detector, 0.9);
     
-    setRootAndScale(C, MAJOR);
+    tEnvelopeFollower_init(&follower, 0.15, 0.95, &leaf);
+    tSawtooth_init(&saw[0], &leaf);
+    tSawtooth_init(&saw[1], &leaf);
+    
+    tSawtooth_setFreq(&saw[0], 110);
+    tSawtooth_setFreq(&saw[1], 220);
+    
+    tRamp_init(&sawFreq, 0.005, 1, &leaf);
+    tRamp_init(&gain, 0.020, 1, &leaf);
+    
 }
 #define RETUNE 1
 #define FORMANT 1
@@ -182,34 +189,41 @@ float formant_out = 0.0;
 float delay_out = 0.0;;
 float lastOut[2] = {0.0,0.0};
 float out[2] = {0.0,0.0};
+
+float squaresum = 0.0;
+float thresh = 2.0;
+float rms = 0.0;
+float RMS_tick(float sample)
+{
+    squaresum = squaresum * 0.999 + sample * sample;
+    rms = sqrt(squaresum);
+    return rms;
+}
+float sawGain = 0.5;
+float voxGain = 0.5;
+
 float*   VoxWorld_tick            (float input)
 {
-    inputFreq = tRetune_getInputFrequency(&retune);
-    inputMidi = ftom(inputFreq);
+    tDualPitchDetector_tick(&detector, input);
     
-    tuneTo = mtof(tune(inputMidi));
+    inputFreq = tDualPitchDetector_getFrequency(&detector);
+    
+    tRamp_setDest(&sawFreq, inputFreq);
 
-    tRetune_tuneVoices(&retune, pitchRatios);
+    tuneTo =  tRamp_tick(&sawFreq);//mtof(tune(ftom(tRamp_tick(&sawFreq))));
     
-    float* voices = tRetune_tick(&retune, input);
+    tSawtooth_setFreq(&saw[0], tuneTo);
+    tSawtooth_setFreq(&saw[1], tuneTo * (1.5));
     
-    float l = 0.0;
-    float r = 0.0;
+    float wet = tVocoder_tick(&vocoder, (tSawtooth_tick(&saw[0]) * 0.8 + tSawtooth_tick(&saw[1]) * 0.2), input);
     
-    for (int i = 0; i < NUM_VOICES; i++)
-    {
-        voices[i] = tFormantShifter_tick(&formant[i], (voices[i]/NUM_VOICES*gains[i]));
-        
-        float pan = (pans[i]+1.0)*0.5;
-        l += voices[i] * (1.0-pan);
-        r += voices[i] * pan;
-    }
-    
-    l = l*(1.0-delayMix) + tTapeDelay_tick(&delay[LEFT], l + out[LEFT]*delayFeedback[LEFT])*delayMix;
-    r = r*(1.0-delayMix) + tTapeDelay_tick(&delay[RIGHT], r + out[RIGHT]*delayFeedback[RIGHT])*delayMix;
+    tRamp_setDest(&gain, (RMS_tick(wet)>0.2) ? 1.0 : 0.0);
 
-    out[LEFT] = l * mix + (1.0-mix) * input * 0.5;
-    out[RIGHT] = r * mix + (1.0-mix) * input * 0.5;
+    out[0] = input * (1.0-mix) + tRamp_tick(&gain) * wet * mix;
+    out[1] = out[0];
+    
+    //out[0] = (tSawtooth_tick(&saw[0]) * 0.7 + tSawtooth_tick(&saw[1]) * tEnvelopeFollower_tick(&follower,input)) * 0.1;
+    //out[1] = out[0];
     
     return out;
 }
@@ -218,7 +232,7 @@ int firstFrame = 1;
 bool lastState = false, lastPlayState = false;
 void    VoxWorld_block           (AudioSampleBuffer& buffer)
 {
-    //DBG(tuneBy);
+    
 }
 
 void    VoxWorld_controllerInput (int cnum, float cval)
@@ -245,7 +259,18 @@ void    VoxWorld_noteOff         (int note)
 
 void    VoxWorld_end             (void)
 {
+    DBG("ENDINGGGGG VOX WORLDDDDD");
     
+    tRamp_free(&gain);
+    tRamp_free(&sawFreq);
+    tSawtooth_free(&saw[1]);
+    tSawtooth_free(&saw[0]);
+    tDualPitchDetector_free(&detector);
+    tVocoder_free(&vocoder);
+    
+    DBG("alloc: " + String(leaf.allocCount));
+    DBG("free: " + String(leaf.freeCount));
+    //leaf_free(&leaf, leaf);
 }
 
 // VOX WORLD UTILITIES
@@ -255,7 +280,7 @@ float VoxWorld_getDelayFeedback(int chan)  { return delayFeedback[chan]; }
 void VoxWorld_setDelayTime(int chan, float time)
 {
     delayTime[chan] = time;
-    tTapeDelay_setDelay(&delay[chan], sampleRate * time);
+    //tTapeDelay_setDelay(&delay[chan], sampleRate * time);
     
 }
 void VoxWorld_setDelayFeedback(int chan, float fb)
@@ -294,7 +319,6 @@ static void run_pool_test(void)
     for (int i = 0; i < size; i++)
     {
         buffer[i] = (float)i;
-
     }
 
     leaf_pool_report();

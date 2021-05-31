@@ -18,6 +18,7 @@
 
 #endif
 
+
 void LEAF_init(LEAF* const leaf, float sr, char* memory, size_t memorysize, float(*random)(void))
 {
     leaf->_internal_mempool.leaf = leaf;
@@ -42,6 +43,7 @@ void LEAF_init(LEAF* const leaf, float sr, char* memory, size_t memorysize, floa
     
     leaf->freeCount = 0;
 }
+
 
 void LEAF_setSampleRate(LEAF* const leaf, float sampleRate)
 {

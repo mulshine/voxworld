@@ -9,12 +9,11 @@
 #if _WIN32 || _WIN64
 
 #include "..\Inc\leaf-analysis.h"
-#include "..\Externals\d_fft_mayer.h"
 #include <intrin.h>
 #else
 
 #include "../Inc/leaf-analysis.h"
-#include "../Externals/d_fft_mayer.h"
+
 
 #endif
 
@@ -486,6 +485,8 @@ void    tSNAC_initToPool    (tSNAC* const snac, int overlaparg, tMempool* const 
     _tSNAC* s = *snac = (_tSNAC*) mpool_alloc(sizeof(_tSNAC), m);
     s->mempool = m;
     
+    mayer_initToPool(&s->_mayer, mp);
+    
     s->biasfactor = DEFBIAS;
     s->timeindex = 0;
     s->periodindex = 0;
@@ -506,6 +507,8 @@ void    tSNAC_initToPool    (tSNAC* const snac, int overlaparg, tMempool* const 
 void tSNAC_free (tSNAC* const snac)
 {
     _tSNAC* s = *snac;
+    
+    mayer_free(&(s->_mayer));
     
     mpool_free((char*)s->inputbuf, s->mempool);
     mpool_free((char*)s->processbuf, s->mempool);
@@ -633,7 +636,7 @@ static void snac_autocorrelation(tSNAC* const snac)
     float *processbuf = s->processbuf;
     float *spectrumbuf = s->spectrumbuf;
     
-    REALFFT(fftsize, processbuf);
+    REALFFT(&(s->_mayer), fftsize, processbuf);
     
     // compute power spectrum
     processbuf[0] *= processbuf[0];                      // DC
@@ -653,7 +656,7 @@ static void snac_autocorrelation(tSNAC* const snac)
     }
     
     // transform power spectrum to autocorrelation function
-    REALIFFT(fftsize, processbuf);
+    REALIFFT(&(s->_mayer), fftsize, processbuf);
     return;
 }
 

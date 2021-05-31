@@ -22,6 +22,14 @@ extern "C" {
 #include "leaf-filters.h"
 #include "leaf-envelopes.h"
 #include "leaf-delay.h"
+
+#if _WIN32 || _WIN64
+#include "..\Externals\d_fft_mayer.h"
+#else
+#include "../Externals/d_fft_mayer.h"
+#endif
+
+
     
     /*!
      * @internal
@@ -454,6 +462,8 @@ extern "C" {
     typedef struct _tSNAC
     {
         tMempool mempool;
+        
+        tMayer _mayer;
         
         float* inputbuf;
         float* processbuf;

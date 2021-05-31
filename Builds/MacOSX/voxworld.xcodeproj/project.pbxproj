@@ -163,7 +163,6 @@
 		6D13A799E1B2537678A01732 /* leaf-midi.h */ /* leaf-midi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-midi.h"; path = "../../LEAF/leaf/Inc/leaf-midi.h"; sourceTree = SOURCE_ROOT; };
 		6DBB62D61885B70B40A2E92C /* leaf.cpp */ /* leaf.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = leaf.cpp; path = ../../LEAF/leaf/leaf.cpp; sourceTree = SOURCE_ROOT; };
 		707A107EFF1D29AF358ACD66 /* GLComponent1.cpp */ /* GLComponent1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GLComponent1.cpp; path = ../../Source/GLComponent1.cpp; sourceTree = SOURCE_ROOT; };
-		72147C3B78281C732A839E8B /* trigtbl.h */ /* trigtbl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = trigtbl.h; path = ../../LEAF/leaf/Externals/trigtbl.h; sourceTree = SOURCE_ROOT; };
 		7300FCF182C12A53375D80BC /* include_juce_core.mm */ /* include_juce_core.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_core.mm; path = ../../JuceLibraryCode/include_juce_core.mm; sourceTree = SOURCE_ROOT; };
 		742F1B95D26FDA6E7A017711 /* leaf-electrical.h */ /* leaf-electrical.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-electrical.h"; path = "../../LEAF/leaf/Inc/leaf-electrical.h"; sourceTree = SOURCE_ROOT; };
 		74F51585C7A6019BD47807F6 /* leaf-reverb.h */ /* leaf-reverb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-reverb.h"; path = "../../LEAF/leaf/Inc/leaf-reverb.h"; sourceTree = SOURCE_ROOT; };
@@ -348,7 +347,6 @@
 			children = (
 				F6AC4CB866278881678BC0F7,
 				54F0B4EE3C0CBFCDA1894870,
-				72147C3B78281C732A839E8B,
 			);
 			name = Externals;
 			sourceTree = "<group>";
