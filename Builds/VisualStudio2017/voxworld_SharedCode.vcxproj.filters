@@ -20,6 +20,9 @@
     <Filter Include="voxworld\Source\External">
       <UniqueIdentifier>{101290BC-F4DC-46F0-757E-73C6697C9EED}</UniqueIdentifier>
     </Filter>
+    <Filter Include="voxworld\Source\VoxWorld\Visual\Images">
+      <UniqueIdentifier>{C4FB4DA1-90FF-B98E-A1CB-190A3E46BD6F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="voxworld\Source\VoxWorld\Visual">
       <UniqueIdentifier>{3B0BC1D7-D345-CA64-0272-8B65722BD30E}</UniqueIdentifier>
     </Filter>
@@ -572,6 +575,12 @@
       <Filter>voxworld\Source\VoxWorld\Visual</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SkyDot.cpp">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Protagonist.cpp">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Platform.cpp">
       <Filter>voxworld\Source\VoxWorld\Visual</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\VoxWorld.cpp">
@@ -2662,6 +2671,9 @@
     <ClCompile Include="C:\JUCE\modules\juce_video\juce_video.mm">
       <Filter>JUCE Modules\juce_video</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -2794,6 +2806,12 @@
       <Filter>voxworld\Source\VoxWorld\Visual</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SkyDot.h">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Protagonist.h">
+      <Filter>voxworld\Source\VoxWorld\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Platform.h">
       <Filter>voxworld\Source\VoxWorld\Visual</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\VoxWorld.h">
@@ -5175,6 +5193,9 @@
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h">
+      <Filter>JUCE Library Code</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
@@ -5183,6 +5204,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\platform.png">
+      <Filter>voxworld\Source\VoxWorld\Visual\Images</Filter>
+    </None>
     <None Include="C:\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt">
       <Filter>JUCE Modules\juce_audio_devices\native\oboe</Filter>
     </None>

@@ -93,6 +93,9 @@
         <FILE id="xwxe1U" name="PluginProcessor.cpp" compile="1" resource="0"
               file="Source/PluginProcessor.cpp"/>
         <GROUP id="{245B364D-2423-C65C-28E9-FED063691A2A}" name="Visual">
+          <GROUP id="{84D061CD-7C3A-06CD-5DCE-B081596BC3D9}" name="Images">
+            <FILE id="CWP0tw" name="platform.png" compile="0" resource="1" file="Source/platform.png"/>
+          </GROUP>
           <FILE id="oQ7Hdj" name="UIComponent.h" compile="0" resource="0" file="Source/UIComponent.h"/>
           <FILE id="ONd1SP" name="UIComponent.cpp" compile="1" resource="0" file="Source/UIComponent.cpp"/>
           <FILE id="QUPidj" name="GLComponent1.h" compile="0" resource="0" file="Source/GLComponent1.h"/>
@@ -100,6 +103,10 @@
                 file="Source/GLComponent1.cpp"/>
           <FILE id="lFmkEz" name="SkyDot.h" compile="0" resource="0" file="Source/SkyDot.h"/>
           <FILE id="HZoYuF" name="SkyDot.cpp" compile="1" resource="0" file="Source/SkyDot.cpp"/>
+          <FILE id="hvayoa" name="Protagonist.h" compile="0" resource="0" file="Source/Protagonist.h"/>
+          <FILE id="Qs9J09" name="Protagonist.cpp" compile="1" resource="0" file="Source/Protagonist.cpp"/>
+          <FILE id="ZLdu91" name="Platform.h" compile="0" resource="0" file="Source/Platform.h"/>
+          <FILE id="n32SXp" name="Platform.cpp" compile="1" resource="0" file="Source/Platform.cpp"/>
         </GROUP>
         <GROUP id="{78F4705A-F0E3-D0BC-3E76-F0D92374C955}" name="Audio">
           <FILE id="xGEfAX" name="VoxWorld.h" compile="0" resource="0" file="Source/VoxWorld.h"/>

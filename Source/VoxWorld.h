@@ -13,10 +13,17 @@
 
 #include "LEAFLink.h"
 
-#include "Yin.h"
 #include "../LEAF/leaf/leaf.h"
 
 // VoxWorld API
+
+typedef enum VoxWorldMode
+{
+    VoxWorldMode1,
+    VoxWorldMode2,
+    VoxWorldMode3,
+    VoxWorldMode4
+} VoxWorldMode;
 
 float*   VoxWorld_tick            (float input);
 void    VoxWorld_init            (float sampleRate, int blocksize);
@@ -33,6 +40,24 @@ float VoxWorld_getDelayFeedback(int chan);
 void VoxWorld_setDelayTime(int chan, float time);
 void VoxWorld_setDelayFeedback(int chan, float fb);
 
+
+void VoxWorld_setMode(VoxWorldMode mode);
+
+void VoxWorld_setX(float X);
+void VoxWorld_setY(float Y);
+
+void VoxWorld_clone(void);
+void VoxWorld_declone(void);
+
+
+void VoxWorld_increaseDelayFeedback(void);
+void VoxWorld_decreaseDelayFeedback(void);
+
+void VoxWorld_increaseDelayTime(void);
+void VoxWorld_decreaseDelayTime(void);
+
+void VoxWorld_increaseDelayMix(void);
+void VoxWorld_decreaseDelayMix(void);
 
 
 

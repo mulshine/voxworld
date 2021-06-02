@@ -164,6 +164,8 @@
     <ClCompile Include="..\..\Source\UIComponent.cpp"/>
     <ClCompile Include="..\..\Source\GLComponent1.cpp"/>
     <ClCompile Include="..\..\Source\SkyDot.cpp"/>
+    <ClCompile Include="..\..\Source\Protagonist.cpp"/>
+    <ClCompile Include="..\..\Source\Platform.cpp"/>
     <ClCompile Include="..\..\Source\VoxWorld.cpp"/>
     <ClCompile Include="C:\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -2124,6 +2126,7 @@
     <ClCompile Include="C:\JUCE\modules\juce_video\juce_video.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_devices.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_formats.cpp"/>
@@ -2170,6 +2173,8 @@
     <ClInclude Include="..\..\Source\UIComponent.h"/>
     <ClInclude Include="..\..\Source\GLComponent1.h"/>
     <ClInclude Include="..\..\Source\SkyDot.h"/>
+    <ClInclude Include="..\..\Source\Protagonist.h"/>
+    <ClInclude Include="..\..\Source\Platform.h"/>
     <ClInclude Include="..\..\Source\VoxWorld.h"/>
     <ClInclude Include="..\..\Source\ConstantQEqualizer.hpp"/>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
@@ -2963,10 +2968,12 @@
     <ClInclude Include="C:\JUCE\modules\juce_video\playback\juce_VideoComponent.h"/>
     <ClInclude Include="..\..\..\..\..\..\JUCE\modules\juce_video\juce_video.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\JucePluginDefines.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\platform.png"/>
     <None Include="C:\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt"/>
     <None Include="C:\JUCE\modules\juce_audio_devices\native\oboe\readme.md"/>
     <None Include="C:\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>

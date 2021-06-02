@@ -760,6 +760,8 @@ extern "C" {
      @param formant A pointer to the relevant tFormantShifter.
      
      @} */
+
+#define MAX_FORMANT_ORDER 100
     
     typedef struct _tFormantShifter
     {
@@ -784,7 +786,6 @@ extern "C" {
         float fmutealph;
         unsigned int cbi;
         float shiftFactor;
-        float intensity, invIntensity;
         tHighpass hp;
         tHighpass hp2;
         tFeedbackLeveler fbl1;
@@ -804,7 +805,7 @@ extern "C" {
     float   tFormantShifter_add             (tFormantShifter* const, float input);
     void    tFormantShifter_ioSamples       (tFormantShifter* const, float* in, float* out, int size, float fwarp);
     void    tFormantShifter_setShiftFactor  (tFormantShifter* const, float shiftFactor);
-    void    tFormantShifter_setIntensity    (tFormantShifter* const, float intensity);
+    void    tFormantShifter_setOrder        (tFormantShifter* const fsr, int order);
     void    tFormantShifter_setSampleRate   (tFormantShifter* const fsr, float sr);
     
     //==============================================================================

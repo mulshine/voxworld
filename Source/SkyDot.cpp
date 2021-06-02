@@ -15,11 +15,14 @@ SkyDot::SkyDot(float startX, float startY):
 X(startX),
 Y(startY)
 {
-    size = 100.0 + (getRandomFloat()-0.5) * 50;
-    fill = Colour(getRandomFloat()*256, getRandomFloat()*256, getRandomFloat()*256);
+    size = 75.0 + (getRandomFloat()-0.5) * 50;
+    decay = 0.95 + getRandomFloat()*0.049;
+    fill = Colour::fromRGBA(getRandomFloat()*256, getRandomFloat()*256, getRandomFloat()*256, getRandomFloat()*50+50);
     setSize(size*2,size*2);
     width = getWidth();
     height = getHeight();
+    
+    setInterceptsMouseClicks(false, false);
 }
 
 SkyDot::~SkyDot()
@@ -32,7 +35,7 @@ void SkyDot::paint (Graphics& g)
 {
     g.fillAll(Colours::transparentWhite);
     
-    size *= 0.99;
+    size *= decay;
     if (size < 5) size = 95;
     
     g.setColour(fill);

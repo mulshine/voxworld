@@ -10,8 +10,7 @@
 
 #include "PluginEditor.h"
 
-#include "LEAFLink.h"
-
+#include "LEAFLink.h"	
 
 
 VoxWorldAudioProcessorEditor::VoxWorldAudioProcessorEditor(VoxWorldAudioProcessor& processor):
@@ -20,8 +19,42 @@ AudioProcessorEditor (processor)
     setSize(width, height);
     startTimerHz(60);
     
+    addKeyListener(this);
+    setWantsKeyboardFocus(true);
+
+    setInterceptsMouseClicks(true, false);
+    
     // initialize eq path
     initializeEQPath(40);
+    
+    arrowKeyDown[LEFT_KEY] = false;
+    arrowKeyDown[RIGHT_KEY] = false;
+    arrowKeyDown[UP_KEY] = false;
+    arrowKeyDown[DOWN_KEY] = false;
+    
+    
+    mike.addMouseListener(this, true);
+    
+    addAndMakeVisible(mike);
+    mike.setTopLeftPosition(0, height-mike.getHeight());
+    
+    for (int i = 0; i < 1; i++)
+    {
+        platforms.add(new Platform());
+        Platform* newPlatform = platforms.getLast();
+        newPlatform->setBounds(width*0.5, height*0.5, (width/8.0), (width/8.0)*0.2);
+        newPlatform->addMouseListener(this, true);
+        newPlatform->toFront(false);
+        
+        addAndMakeVisible(newPlatform);
+    }
+    
+    gradientY.addColour(0.0, Colour(0, 0, 0));
+    gradientY.addColour(0.61, Colour(63, 182, 241));
+    gradientY.addColour(1.0, Colour(244,200,216));
+    
+    
+    
 }
 
 VoxWorldAudioProcessorEditor::~VoxWorldAudioProcessorEditor()
@@ -29,54 +62,22 @@ VoxWorldAudioProcessorEditor::~VoxWorldAudioProcessorEditor()
     
 }
 
-void VoxWorldAudioProcessorEditor::timerCallback(void)
-{
-    repaint();
-}
-
-void VoxWorldAudioProcessorEditor::mouseDown (const MouseEvent& event)
-{
-    mouseIsDown = true;
-    
-    if (event.y < (getHeight()*0.65))
-    {
-        dots.add(new SkyDot(event.x, event.y));
-        SkyDot* dot = dots.getLast();
-        
-        dot->setCentrePosition(event.x, event.y);
-        addAndMakeVisible(dot);
-
-        for (int i = 0; i < 2; i++)
-        {
-            float fb = VoxWorld_getDelayFeedback(i)*1.2;
-            if (fb > 0.95) fb = 0.95;
-            DBG("feedback " + String(i) + ": " + String(fb));
-            VoxWorld_setDelayFeedback(i,fb);
-            
-            float time = VoxWorld_getDelayTime(i)*1.05;
-            if (time > 1.0) time = 1.0;
-            DBG("time " + String(i) + ": " + String(time));
-            VoxWorld_setDelayTime(i,fb);
-        }
-        
-    }
-   
-}
-
-void VoxWorldAudioProcessorEditor::mouseUp (const MouseEvent& event)
-{
-    mouseIsDown = false;
-}
-
 void VoxWorldAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll (Colours::slategrey);   // clear the background
+    g.fillAll (gradientY.getColourAtPosition(mikeY));   // clear the background
     float rms = getProcessor().getInputRMS();
     for (auto dot : dots)
     {
         dot->setShake(rms);
+        int newX = (int)((dot->getX() - 2 * getRandomFloat()*1)+getWidth()) % getWidth();
+        int newY = (int)((dot->getY() + 3 * getRandomFloat()*1)+getHeight()*0.5) % (int)(getHeight()*0.5);
+        
+        dot->setTopLeftPosition(newX, newY);
         dot->repaint();
     }
+    
+    mike.setShake(rms);
+    mike.repaint();
     
     auto position = getMouseXYRelative();
     if (mouseIsDown && position.y > (getHeight()*0.65))
@@ -99,6 +100,7 @@ void VoxWorldAudioProcessorEditor::paint (Graphics& g)
     
     myPath.lineTo(Point<float>(getWidth(),eqPath.back().getY()));
     
+    g.setColour(Colour::fromRGBA(100, 100, 100, 150));
     g.strokePath(myPath, PathStrokeType(15,
                 PathStrokeType::JointStyle::curved,
                 PathStrokeType::EndCapStyle::rounded));
@@ -106,7 +108,213 @@ void VoxWorldAudioProcessorEditor::paint (Graphics& g)
 
 void VoxWorldAudioProcessorEditor::resized()
 {
+    
+}
 
+void VoxWorldAudioProcessorEditor::timerCallback(void)
+{
+    if (!hasKeyboardFocus(false)) grabKeyboardFocus();
+    
+    // detect if on platform
+    bool onPlatform = false;
+    for (auto platform : platforms)
+    {
+        Rectangle<int> bounds = platform->getBounds();
+        
+        if (((mike.getX()+mike.getWidth()/2+mike.getCenterBoxSize()/2) >= bounds.getX()) &&
+            ((mike.getX()+mike.getWidth()/2-mike.getCenterBoxSize()/2) <= (bounds.getX()+bounds.getWidth())))
+        {
+            if ((abs((mike.getY()+mike.getHeight()*0.5)-bounds.getY()) < 30))
+            {
+                onPlatform = true;
+            }
+        }
+        
+    }
+    
+    
+    float newY = mike.getY() + (onPlatform ? 0.0 : ((height - mike.getY()) * 0.004)); // better model for gravity (currently slew-based)
+    newY = LEAF_clip(-mike.getHeight()*0.5, newY+((moveY>0)?-5:(!onPlatform && (moveY<0)?5:0)), height-mike.getHeight()*0.5);
+    
+    
+    mikeY = (height-(newY+mike.getHeight()*0.5))/height;
+    VoxWorld_setY(mikeY);
+    
+    float newX = LEAF_clip(-mike.getWidth()*0.5, mike.getX()+((moveX>0)?5:((moveX<0)?-5:0)), width-mike.getWidth()*0.5);
+    VoxWorld_setX((newX+mike.getWidth()*0.5)/getWidth());
+    
+
+    mike.setTopLeftPosition(newX, newY);
+    
+    
+    if (moveX>0) mike.setRight();
+    else if (moveX<0) mike.setLeft();
+        
+    repaint();
+}
+
+void VoxWorldAudioProcessorEditor::mouseDown (const MouseEvent& event)
+{
+    if (event.originalComponent == &mike)
+    {
+        DBG("mouse down on PRO");
+    }
+    else if (platforms.contains((Platform*)event.originalComponent))
+    {
+       
+    }
+    else
+    {
+        mouseIsDown = true;
+    }
+}
+
+void VoxWorldAudioProcessorEditor::mouseUp (const MouseEvent& event)
+{
+    mouseIsDown = false;
+    
+    if (event.originalComponent == &mike)
+    {
+        if (event.getDistanceFromDragStart() < 50 )
+        {
+            DBG("mouse up on PRO");
+            if (ModifierKeys::getCurrentModifiers().isShiftDown())
+            {
+                mike.declone();
+                VoxWorld_declone();
+            }
+            else
+            {
+                mike.clone();
+                VoxWorld_clone();
+            }
+        }
+    }
+    else
+    {
+        if (event.y < (getHeight()*0.65))
+        {
+            if (ModifierKeys::getCurrentModifiers().isShiftDown())
+            {
+                if (dots.size() > 0)
+                {
+                    removeChildComponent(dots.getLast());
+                    dots.removeLast();
+                    
+                    VoxWorld_decreaseDelayFeedback();
+                }
+            }
+            else
+            {
+                if (dots.size() < 20)
+                {
+                    dots.add(new SkyDot(event.x, event.y));
+                    SkyDot* dot = dots.getLast();
+                    
+                    dot->setCentrePosition(event.x, event.y);
+                    addAndMakeVisible(dot);
+                
+                    dot->toBehind(&mike);
+                    VoxWorld_increaseDelayFeedback();
+                }
+            }
+            
+        }
+    }
+}
+
+
+bool VoxWorldAudioProcessorEditor::keyPressed (const KeyPress& key, Component* const originatingComponent)
+{
+    int keyCode = key.getKeyCode();
+    
+    if (keyCode == KeyPress::rightKey)
+    {
+        moveX = 1;
+        arrowKeyDown[RIGHT_KEY] = true;
+    }
+    else if (keyCode == KeyPress::leftKey)
+    {
+        moveX = -1;
+        arrowKeyDown[LEFT_KEY] = true;
+    }
+    else if (keyCode == KeyPress::upKey)
+    {
+        moveY = 1;
+        arrowKeyDown[UP_KEY] = true;
+    }
+    else if (keyCode == KeyPress::downKey)
+    {
+        moveY = -1;
+        arrowKeyDown[DOWN_KEY] = true;
+    }
+    return false;
+}
+
+bool VoxWorldAudioProcessorEditor::keyStateChanged (bool isKeyDown, Component* originatingComponent)
+{
+    if (!isKeyDown)
+    {
+        if (!KeyPress::isKeyCurrentlyDown(KeyPress::rightKey))
+        {
+            if (!KeyPress::isKeyCurrentlyDown(KeyPress::leftKey))
+            {
+                moveX = 0;
+                arrowKeyDown[LEFT_KEY] = false;
+            }
+            else
+            {
+                moveX = -1;
+            }
+            arrowKeyDown[RIGHT_KEY] = false;
+        }
+        
+        if (!KeyPress::isKeyCurrentlyDown(KeyPress::leftKey))
+        {
+            if (!KeyPress::isKeyCurrentlyDown(KeyPress::rightKey))
+            {
+                moveX = 0;
+                arrowKeyDown[RIGHT_KEY] = false;
+            }
+            else
+            {
+                moveX = 1;
+            }
+            arrowKeyDown[LEFT_KEY] = false;
+        }
+        
+        if (!KeyPress::isKeyCurrentlyDown(KeyPress::upKey))
+        {
+            DBG("up released");
+            if (!KeyPress::isKeyCurrentlyDown(KeyPress::downKey))
+            {
+                moveY = 0;
+                arrowKeyDown[DOWN_KEY] = false;
+            }
+            else
+            {
+                moveY = -1;
+            }
+            arrowKeyDown[UP_KEY] = false;
+        }
+       
+        if (!KeyPress::isKeyCurrentlyDown(KeyPress::downKey))
+        {
+            DBG("down released");
+            if (!KeyPress::isKeyCurrentlyDown(KeyPress::upKey))
+            {
+                moveY = 0;
+                arrowKeyDown[UP_KEY] = false;
+            }
+            else
+            {
+                moveY = 1;
+            }
+            arrowKeyDown[DOWN_KEY] = false;
+        }
+    }
+    
+    return false;
 }
 
 

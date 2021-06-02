@@ -1792,16 +1792,16 @@ void tFormantShifter_initToPool (tFormantShifter* const fsr, int order, tMempool
     LEAF* leaf = fs->mempool->leaf;
     
     fs->ford = order;
-    fs->fk = (float*) mpool_calloc(sizeof(float) * fs->ford, m);
-    fs->fb = (float*) mpool_calloc(sizeof(float) * fs->ford, m);
-    fs->fc = (float*) mpool_calloc(sizeof(float) * fs->ford, m);
-    fs->frb = (float*) mpool_calloc(sizeof(float) * fs->ford, m);
-    fs->frc = (float*) mpool_calloc(sizeof(float) * fs->ford, m);
-    fs->fsig = (float*) mpool_calloc(sizeof(float) * fs->ford, m);
-    fs->fsmooth = (float*) mpool_calloc(sizeof(float) * fs->ford, m);
-    fs->ftvec = (float*) mpool_calloc(sizeof(float) * fs->ford, m);
+    fs->fk = (float*) mpool_calloc(sizeof(float) * MAX_FORMANT_ORDER, m);
+    fs->fb = (float*) mpool_calloc(sizeof(float) * MAX_FORMANT_ORDER, m);
+    fs->fc = (float*) mpool_calloc(sizeof(float) * MAX_FORMANT_ORDER, m);
+    fs->frb = (float*) mpool_calloc(sizeof(float) * MAX_FORMANT_ORDER, m);
+    fs->frc = (float*) mpool_calloc(sizeof(float) * MAX_FORMANT_ORDER, m);
+    fs->fsig = (float*) mpool_calloc(sizeof(float) * MAX_FORMANT_ORDER, m);
+    fs->fsmooth = (float*) mpool_calloc(sizeof(float) * MAX_FORMANT_ORDER, m);
+    fs->ftvec = (float*) mpool_calloc(sizeof(float) * MAX_FORMANT_ORDER, m);
     
-    fs->fbuff = (float*) mpool_calloc(sizeof(float*) * fs->ford, m);
+    fs->fbuff = (float*) mpool_calloc(sizeof(float*) * MAX_FORMANT_ORDER, m);
 
     fs->sampleRate = leaf->sampleRate;
     fs->invSampleRate = leaf->invSampleRate;
@@ -1812,10 +1812,8 @@ void tFormantShifter_initToPool (tFormantShifter* const fsr, int order, tMempool
     fs->flp = 0.0f;
     fs->flpa = powf(0.001f, 10.0f * fs->invSampleRate);
     fs->fmute = 1.0f;
-    fs->fmutealph = powf(0.001f, 1.0f * fs->invSampleRate);
+    fs->fmutealph = 0.999;//powf(0.001f, 1.0f * fs->invSampleRate);
     fs->cbi = 0;
-    fs->intensity = 1.0f;
-    fs->invIntensity = 1.0f;
     tHighpass_initToPool(&fs->hp, 20.0f, mp);
     tHighpass_initToPool(&fs->hp2, 20.0f, mp);
     tFeedbackLeveler_initToPool(&fs->fbl1, 0.8f, .005f, 0.125, 1, mp);
@@ -1847,11 +1845,18 @@ float tFormantShifter_tick(tFormantShifter* const fsr, float in)
     return tFormantShifter_add(fsr, tFormantShifter_remove(fsr, in));
 }
 
+void tFormantShifter_setOrder(tFormantShifter* const fsr, int order)
+{
+    _tFormantShifter* fs = *fsr;
+    
+    fs->ford = LEAF_clipInt(1, order, MAX_FORMANT_ORDER);
+}
+
 float tFormantShifter_remove(tFormantShifter* const fsr, float in)
 {
     _tFormantShifter* fs = *fsr;
     in = tFeedbackLeveler_tick(&fs->fbl1, in);
-    in = tHighpass_tick(&fs->hp, in /** fs->intensity*/);
+    in = tHighpass_tick(&fs->hp, in);
     
 
     float fa, fb, fc, foma, falph, ford, flamb, tf, fk;
@@ -1980,7 +1985,7 @@ float tFormantShifter_add(tFormantShifter* const fsr, float in)
     //tf = tFeedbackLeveler_tick(&fs->fbl2, tf);
     tf = tHighpass_tick(&fs->hp2, tanhf(tf));
 
-    return tf /* * fs->invIntensity */;
+    return tf;
 }
 
 // 1.0f is no change, 2.0f is an octave up, 0.5f is an octave down
@@ -1988,25 +1993,6 @@ void tFormantShifter_setShiftFactor(tFormantShifter* const fsr, float shiftFacto
 {
     _tFormantShifter* fs = *fsr;
     fs->shiftFactor = shiftFactor;
-}
-
-void tFormantShifter_setIntensity(tFormantShifter* const fsr, float intensity)
-{
-    _tFormantShifter* fs = *fsr;
-
-    fs->intensity = LEAF_clip(1.0f, intensity, 100.0f);
-
-   // tFeedbackLeveler_setTargetLevel(&fs->fbl1, fs->intensity);
-    //tFeedbackLeveler_setTargetLevel(&fs->fbl2, fs->intensity);
-    //make sure you don't divide by zero, doofies
-    if (fs->intensity != 0.0f)
-    {
-        fs->invIntensity = 1.0f/fs->intensity;
-    }
-    else
-    {
-        fs->invIntensity = 1.0f;
-    }
 }
 
 void tFormantShifter_setSampleRate(tFormantShifter* const fsr, float sr)

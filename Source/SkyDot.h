@@ -36,6 +36,7 @@ private:
     
     float shake = 0.0;
     float width,height;
+    float decay = 0.99;
     float X{0};
     float Y{0};
     float size{100};

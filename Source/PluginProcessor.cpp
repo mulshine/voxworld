@@ -110,8 +110,11 @@ VoxWorldAudioProcessor::VoxWorldAudioProcessor()
     #endif
                   )
 #endif
+,state (*this, nullptr, "parameters",
+        { std::make_unique<AudioParameterInt> ("platformX",  "Platform X", 0, 1500, 600),
+          std::make_unique<AudioParameterInt> ("platformY", "Platform Y", 0, 1000, 500),
+          std::make_unique<AudioParameterInt> ("numDots", "Number of Dots", 0, 25, 0)  })
 {
-    
 }
 
 VoxWorldAudioProcessor::~VoxWorldAudioProcessor()

@@ -25,6 +25,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		003A47D4F5F384A903E78104 /* Platform.cpp */ = {isa = PBXBuildFile; fileRef = 533B2BA13990970F24425E52; };
+		0B679DCF1062F0593BD3D0E9 /* Protagonist.cpp */ = {isa = PBXBuildFile; fileRef = 9B4F00A57104868F6CD0F0DD; };
+		0CAB729D37C82A322C1A0C4C /* BinaryData.cpp */ = {isa = PBXBuildFile; fileRef = 84CD0F49D60904949E37C23F; };
 		0EFAA49E3309D2D539AB0322 /* include_juce_audio_processors.mm */ = {isa = PBXBuildFile; fileRef = 90B65B7356ED20CDE1E41E72; };
 		1216FC02EE4B87FBCD3F1969 /* AudioToolbox.framework */ = {isa = PBXBuildFile; fileRef = D4C3DE7EEE9FDF78B092A983; };
 		14ADEA9EF8E395A3ABEF7DC7 /* include_juce_audio_plugin_client_VST_utils.mm */ = {isa = PBXBuildFile; fileRef = 29468D288C7F83A4DC6A4768; };
@@ -130,6 +133,7 @@
 		23EEB187590BEAB4C2F32653 /* Yin.h */ /* Yin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Yin.h; path = ../../Source/Yin.h; sourceTree = SOURCE_ROOT; };
 		24320B71D0E07B8C2F1E3427 /* leaf-effects.c */ /* leaf-effects.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-effects.c"; path = "../../LEAF/leaf/Src/leaf-effects.c"; sourceTree = SOURCE_ROOT; };
 		2752EDC90F3B2EC8667813B7 /* juce_gui_extra */ /* juce_gui_extra */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_extra; path = /Users/airship/JUCE/modules/juce_gui_extra; sourceTree = "<absolute>"; };
+		27E392DF358F039F1043C411 /* BinaryData.h */ /* BinaryData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinaryData.h; path = ../../JuceLibraryCode/BinaryData.h; sourceTree = SOURCE_ROOT; };
 		29468D288C7F83A4DC6A4768 /* include_juce_audio_plugin_client_VST_utils.mm */ /* include_juce_audio_plugin_client_VST_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_plugin_client_VST_utils.mm; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_VST_utils.mm; sourceTree = SOURCE_ROOT; };
 		2AC62DE8DA9A8DB0D7BC05AF /* leaf-oscillators.h */ /* leaf-oscillators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-oscillators.h"; path = "../../LEAF/leaf/Inc/leaf-oscillators.h"; sourceTree = SOURCE_ROOT; };
 		2C7CD9EAAD3E2A428D9684F7 /* CoreMedia.framework */ /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -150,6 +154,7 @@
 		4B01338E96A7B7F6B84B32BF /* leaf-tables.c */ /* leaf-tables.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-tables.c"; path = "../../LEAF/leaf/Src/leaf-tables.c"; sourceTree = SOURCE_ROOT; };
 		4D3A26496E4B15320D56353A /* leaf-electrical.c */ /* leaf-electrical.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-electrical.c"; path = "../../LEAF/leaf/Src/leaf-electrical.c"; sourceTree = SOURCE_ROOT; };
 		4E6FB69A17B6DEE14B315FC0 /* leaf-mempool.h */ /* leaf-mempool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-mempool.h"; path = "../../LEAF/leaf/Inc/leaf-mempool.h"; sourceTree = SOURCE_ROOT; };
+		533B2BA13990970F24425E52 /* Platform.cpp */ /* Platform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Platform.cpp; path = ../../Source/Platform.cpp; sourceTree = SOURCE_ROOT; };
 		54F0B4EE3C0CBFCDA1894870 /* d_fft_mayer.h */ /* d_fft_mayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = d_fft_mayer.h; path = ../../LEAF/leaf/Externals/d_fft_mayer.h; sourceTree = SOURCE_ROOT; };
 		5C61FC9EEDAA9C65AF92D464 /* AU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = voxworld.component; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF0F933DB9358ADBAF2FC99 /* include_juce_audio_basics.mm */ /* include_juce_audio_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_basics.mm; path = ../../JuceLibraryCode/include_juce_audio_basics.mm; sourceTree = SOURCE_ROOT; };
@@ -175,6 +180,7 @@
 		82FFB1AA2537054055BFCBBF /* leaf-instruments.h */ /* leaf-instruments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-instruments.h"; path = "../../LEAF/leaf/Inc/leaf-instruments.h"; sourceTree = SOURCE_ROOT; };
 		838C4868E3F9C702EE66D5F7 /* Info-AUv3_AppExtension.plist */ /* Info-AUv3_AppExtension.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-AUv3_AppExtension.plist"; path = "Info-AUv3_AppExtension.plist"; sourceTree = SOURCE_ROOT; };
 		847E418D2E1394AA25584651 /* leaf-instruments.c */ /* leaf-instruments.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-instruments.c"; path = "../../LEAF/leaf/Src/leaf-instruments.c"; sourceTree = SOURCE_ROOT; };
+		84CD0F49D60904949E37C23F /* BinaryData.cpp */ /* BinaryData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = SOURCE_ROOT; };
 		86AAD91F73AB24F301C8BEEB /* include_juce_audio_plugin_client_AUv3.mm */ /* include_juce_audio_plugin_client_AUv3.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_plugin_client_AUv3.mm; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_AUv3.mm; sourceTree = SOURCE_ROOT; };
 		86EE36EDADDECAA12E7424BD /* include_juce_audio_devices.mm */ /* include_juce_audio_devices.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_devices.mm; path = ../../JuceLibraryCode/include_juce_audio_devices.mm; sourceTree = SOURCE_ROOT; };
 		883EFA6E6FA886473E385AD7 /* Foundation.framework */ /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -191,6 +197,7 @@
 		9607E94FA871C9822FEFACB9 /* juce_events */ /* juce_events */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_events; path = /Users/airship/JUCE/modules/juce_events; sourceTree = "<absolute>"; };
 		9906AA6F89905D62DECCF6CD /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
 		9AD174A063DE9AD9B7F0A4EE /* Info-AU.plist */ /* Info-AU.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-AU.plist"; path = "Info-AU.plist"; sourceTree = SOURCE_ROOT; };
+		9B4F00A57104868F6CD0F0DD /* Protagonist.cpp */ /* Protagonist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Protagonist.cpp; path = ../../Source/Protagonist.cpp; sourceTree = SOURCE_ROOT; };
 		9B7FB7BD0356BA1801572423 /* CoreAudioKit.framework */ /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		9E8F106C4DCBD55B48E54D99 /* include_juce_gui_extra.mm */ /* include_juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_extra.mm; path = ../../JuceLibraryCode/include_juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
 		A02CE6774629795DA35BE4FB /* QuartzCore.framework */ /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -199,6 +206,7 @@
 		A806E06DB2471F9D8DFEF081 /* juce_opengl */ /* juce_opengl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_opengl; path = /Users/airship/JUCE/modules/juce_opengl; sourceTree = "<absolute>"; };
 		A810512FE4F6CB3D86365DEA /* Shared Code */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoxworld.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC45FF9E66655952E16B5782 /* juce_video */ /* juce_video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_video; path = /Users/airship/JUCE/modules/juce_video; sourceTree = "<absolute>"; };
+		ADA4A2ABF4CF9C0576C27CE1 /* platform.png */ /* platform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = platform.png; path = ../../Source/platform.png; sourceTree = SOURCE_ROOT; };
 		B032F73DC7B2E77C7AEC5432 /* UIComponent.h */ /* UIComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UIComponent.h; path = ../../Source/UIComponent.h; sourceTree = SOURCE_ROOT; };
 		B286CCBD93F0881226A4A773 /* leaf-envelopes.h */ /* leaf-envelopes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-envelopes.h"; path = "../../LEAF/leaf/Inc/leaf-envelopes.h"; sourceTree = SOURCE_ROOT; };
 		B63DF6E8DF3662AE18FF7952 /* SkyDot.cpp */ /* SkyDot.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SkyDot.cpp; path = ../../Source/SkyDot.cpp; sourceTree = SOURCE_ROOT; };
@@ -220,6 +228,7 @@
 		DB3D1AB622F662CE3F9EBEF4 /* SkyDot.h */ /* SkyDot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SkyDot.h; path = ../../Source/SkyDot.h; sourceTree = SOURCE_ROOT; };
 		DB52E9A20C9530064746B0C8 /* include_juce_cryptography.mm */ /* include_juce_cryptography.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_cryptography.mm; path = ../../JuceLibraryCode/include_juce_cryptography.mm; sourceTree = SOURCE_ROOT; };
 		DB7B36C67A25A702567C75BA /* leaf-sampling.h */ /* leaf-sampling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-sampling.h"; path = "../../LEAF/leaf/Inc/leaf-sampling.h"; sourceTree = SOURCE_ROOT; };
+		DDF7ACF53BF1726276C80633 /* Platform.h */ /* Platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Platform.h; path = ../../Source/Platform.h; sourceTree = SOURCE_ROOT; };
 		DEB0771640F015975E4F1C9F /* LEAFLink.h */ /* LEAFLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LEAFLink.h; path = ../../Source/LEAFLink.h; sourceTree = SOURCE_ROOT; };
 		E06CD5C6F321220D3616FD37 /* leaf-config.h */ /* leaf-config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-config.h"; path = "../../LEAF/leaf/leaf-config.h"; sourceTree = SOURCE_ROOT; };
 		E531F47A3F2C3E12351D2CCB /* VoxWorld.h */ /* VoxWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VoxWorld.h; path = ../../Source/VoxWorld.h; sourceTree = SOURCE_ROOT; };
@@ -231,6 +240,7 @@
 		EB745AF543716103FD13779B /* leaf-analysis.c */ /* leaf-analysis.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-analysis.c"; path = "../../LEAF/leaf/Src/leaf-analysis.c"; sourceTree = SOURCE_ROOT; };
 		ECD78AEAAAA741AE80AB4C49 /* LEAFLink.cpp */ /* LEAFLink.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LEAFLink.cpp; path = ../../Source/LEAFLink.cpp; sourceTree = SOURCE_ROOT; };
 		ED04EE4B521059D8790ADE26 /* leaf-analysis.h */ /* leaf-analysis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-analysis.h"; path = "../../LEAF/leaf/Inc/leaf-analysis.h"; sourceTree = SOURCE_ROOT; };
+		ED054264DF5D851ADE0A7C74 /* Protagonist.h */ /* Protagonist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Protagonist.h; path = ../../Source/Protagonist.h; sourceTree = SOURCE_ROOT; };
 		EDEEB6BD10AAF09167E1D630 /* include_juce_audio_utils.mm */ /* include_juce_audio_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_utils.mm; path = ../../JuceLibraryCode/include_juce_audio_utils.mm; sourceTree = SOURCE_ROOT; };
 		F0583B0BEFC8C3015C6EBE4E /* leaf-tables.h */ /* leaf-tables.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-tables.h"; path = "../../LEAF/leaf/Inc/leaf-tables.h"; sourceTree = SOURCE_ROOT; };
 		F2DBB1F1ECD6CBF8895CE4A0 /* juce_audio_processors */ /* juce_audio_processors */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_processors; path = /Users/airship/JUCE/modules/juce_audio_processors; sourceTree = "<absolute>"; };
@@ -512,10 +522,20 @@
 			name = External;
 			sourceTree = "<group>";
 		};
+		C2F9B434FB78E127C9489CD3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				ADA4A2ABF4CF9C0576C27CE1,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		D59B989FA35A6F4A3D32BC09 /* JUCE Library Code */ = {
 			isa = PBXGroup;
 			children = (
 				7A3B8E19E000A7A4B7DD7C44,
+				84CD0F49D60904949E37C23F,
+				27E392DF358F039F1043C411,
 				5EF0F933DB9358ADBAF2FC99,
 				86EE36EDADDECAA12E7424BD,
 				9906AA6F89905D62DECCF6CD,
@@ -593,12 +613,17 @@
 		F56323FBB17E63144A460FEB /* Visual */ = {
 			isa = PBXGroup;
 			children = (
+				C2F9B434FB78E127C9489CD3,
 				B032F73DC7B2E77C7AEC5432,
 				19A742736B41FDD7EC76D86A,
 				1ACF807F4F531E0B8261FDBC,
 				707A107EFF1D29AF358ACD66,
 				DB3D1AB622F662CE3F9EBEF4,
 				B63DF6E8DF3662AE18FF7952,
+				ED054264DF5D851ADE0A7C74,
+				9B4F00A57104868F6CD0F0DD,
+				DDF7ACF53BF1726276C80633,
+				533B2BA13990970F24425E52,
 			);
 			name = Visual;
 			sourceTree = "<group>";
@@ -946,7 +971,10 @@
 				662B81F1E6B7CCAEE68A6071,
 				D77A4325D867E1A2D9CC6BF3,
 				1E5A6FB767580386FCC477D8,
+				0B679DCF1062F0593BD3D0E9,
+				003A47D4F5F384A903E78104,
 				F0021CC8342833F94BC6A756,
+				0CAB729D37C82A322C1A0C4C,
 				FF03E1847822DFC72C983799,
 				257BB23CBAE55D8AD1B6BFB6,
 				99CF5C370067AFECE3325927,

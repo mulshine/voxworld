@@ -74,6 +74,10 @@ private:
     uint64 timer;
     float gain;
     bool start,ramp;
+    
+    juce::AudioProcessorValueTreeState state;
+    
+   // AudioParameterFloat* gain;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VoxWorldAudioProcessor)
 };
