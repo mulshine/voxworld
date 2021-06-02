@@ -145,6 +145,7 @@
 		3B7560A2848C7A5E6CC6C7BE /* JuceHeader.h */ /* JuceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = SOURCE_ROOT; };
 		3EB084EFCDCB5A6345AB3DD3 /* include_juce_opengl.mm */ /* include_juce_opengl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_opengl.mm; path = ../../JuceLibraryCode/include_juce_opengl.mm; sourceTree = SOURCE_ROOT; };
 		3ED95C28EAC3C3F110E09D1D /* AVFoundation.framework */ /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		40DD33A5093DA22A009F0540 /* FaustConstantQEqualizer.hpp */ /* FaustConstantQEqualizer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FaustConstantQEqualizer.hpp; path = ../../Source/FaustConstantQEqualizer.hpp; sourceTree = SOURCE_ROOT; };
 		41C54CA598A0CC82E377A315 /* VST3 */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = voxworld.vst3; sourceTree = BUILT_PRODUCTS_DIR; };
 		43431BEF85FD51C143433AF3 /* leaf-physical.c */ /* leaf-physical.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-physical.c"; path = "../../LEAF/leaf/Src/leaf-physical.c"; sourceTree = SOURCE_ROOT; };
 		437D1C76B0A3B310010F7445 /* leaf-dynamics.c */ /* leaf-dynamics.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-dynamics.c"; path = "../../LEAF/leaf/Src/leaf-dynamics.c"; sourceTree = SOURCE_ROOT; };
@@ -187,7 +188,6 @@
 		8B9613C966CC375CEE8C1ED5 /* include_juce_video.mm */ /* include_juce_video.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_video.mm; path = ../../JuceLibraryCode/include_juce_video.mm; sourceTree = SOURCE_ROOT; };
 		8BF3871AF99D1A6EF3E51E19 /* Cocoa.framework */ /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		8CE08937BC654006408BC35F /* leaf-math.h */ /* leaf-math.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-math.h"; path = "../../LEAF/leaf/Inc/leaf-math.h"; sourceTree = SOURCE_ROOT; };
-		8D06F40AA7FD91852678457A /* ConstantQEqualizer.hpp */ /* ConstantQEqualizer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConstantQEqualizer.hpp; path = ../../Source/ConstantQEqualizer.hpp; sourceTree = SOURCE_ROOT; };
 		8D2B525620CC009DCE7B27C5 /* leaf-oscillators.c */ /* leaf-oscillators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-oscillators.c"; path = "../../LEAF/leaf/Src/leaf-oscillators.c"; sourceTree = SOURCE_ROOT; };
 		8D88B3DFFFD690D985DD4531 /* include_juce_events.mm */ /* include_juce_events.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_events.mm; path = ../../JuceLibraryCode/include_juce_events.mm; sourceTree = SOURCE_ROOT; };
 		9090713F07BFDB5CFB03858B /* Info-VST3.plist */ /* Info-VST3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-VST3.plist"; path = "Info-VST3.plist"; sourceTree = SOURCE_ROOT; };
@@ -203,6 +203,7 @@
 		A02CE6774629795DA35BE4FB /* QuartzCore.framework */ /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A2F656E4A6F5E2FFBD909D9D /* Carbon.framework */ /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		A31C7380FB7A820B36691533 /* include_juce_gui_basics.mm */ /* include_juce_gui_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_basics.mm; path = ../../JuceLibraryCode/include_juce_gui_basics.mm; sourceTree = SOURCE_ROOT; };
+		A597A8F7A0FDCCA8999C9CB8 /* FaustUtilities.h */ /* FaustUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FaustUtilities.h; path = ../../Source/FaustUtilities.h; sourceTree = SOURCE_ROOT; };
 		A806E06DB2471F9D8DFEF081 /* juce_opengl */ /* juce_opengl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_opengl; path = /Users/airship/JUCE/modules/juce_opengl; sourceTree = "<absolute>"; };
 		A810512FE4F6CB3D86365DEA /* Shared Code */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoxworld.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC45FF9E66655952E16B5782 /* juce_video */ /* juce_video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_video; path = /Users/airship/JUCE/modules/juce_video; sourceTree = "<absolute>"; };
@@ -216,6 +217,7 @@
 		C49D5F8CCBEF49316C0CFEF4 /* juce_gui_basics */ /* juce_gui_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_basics; path = /Users/airship/JUCE/modules/juce_gui_basics; sourceTree = "<absolute>"; };
 		C8EA9DD90FFF3905E3DEA5BB /* leaf-delay.h */ /* leaf-delay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "leaf-delay.h"; path = "../../LEAF/leaf/Inc/leaf-delay.h"; sourceTree = SOURCE_ROOT; };
 		C9755E378CB819138B7FCB21 /* juce_audio_utils */ /* juce_audio_utils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_utils; path = /Users/airship/JUCE/modules/juce_audio_utils; sourceTree = "<absolute>"; };
+		CA6B3433B6CE4B734FE7720D /* FaustDeEsser.hpp */ /* FaustDeEsser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FaustDeEsser.hpp; path = ../../Source/FaustDeEsser.hpp; sourceTree = SOURCE_ROOT; };
 		CC3F17426C064FC82C975883 /* juce_core */ /* juce_core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_core; path = /Users/airship/JUCE/modules/juce_core; sourceTree = "<absolute>"; };
 		CC670F62192AC92399166D2E /* AUv3_AppExtension.entitlements */ /* AUv3_AppExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = AUv3_AppExtension.entitlements; path = AUv3_AppExtension.entitlements; sourceTree = SOURCE_ROOT; };
 		CF31AA0B363C7A2EF6DEF831 /* leaf-math.c */ /* leaf-math.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "leaf-math.c"; path = "../../LEAF/leaf/Src/leaf-math.c"; sourceTree = SOURCE_ROOT; };
@@ -508,7 +510,9 @@
 			children = (
 				E531F47A3F2C3E12351D2CCB,
 				0A36787E9017056CD140E2B5,
-				8D06F40AA7FD91852678457A,
+				A597A8F7A0FDCCA8999C9CB8,
+				40DD33A5093DA22A009F0540,
+				CA6B3433B6CE4B734FE7720D,
 			);
 			name = Audio;
 			sourceTree = "<group>";

@@ -27,7 +27,7 @@
 class VoxWorldAudioProcessorEditor  : public AudioProcessorEditor, public KeyListener, private Timer
 {
 public:
-    VoxWorldAudioProcessorEditor (VoxWorldAudioProcessor&);
+    VoxWorldAudioProcessorEditor (VoxWorldAudioProcessor&, ValueTree&);
     ~VoxWorldAudioProcessorEditor();
 
     //==============================================================================
@@ -54,6 +54,8 @@ private:
         return static_cast<VoxWorldAudioProcessor&> (processor);
     }
     
+    ValueTree& state;
+    
     inline float getX() {return X;};
     inline float getY() {return Y;};
     
@@ -67,6 +69,7 @@ private:
     std::vector<bool> platformMoving;
     Protagonist mike;
     float mikeY = 0.0;
+    float mikeX = 0.0;
     
     bool mouseIsDown{false};
     bool shiftIsDown{false};
@@ -83,6 +86,8 @@ private:
     OwnedArray<Rectangle<int>> autotuneGrid;
     
     ColourGradient gradientY;
+    
+    
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VoxWorldAudioProcessorEditor)
 };

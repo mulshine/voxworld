@@ -111,8 +111,12 @@
         <GROUP id="{78F4705A-F0E3-D0BC-3E76-F0D92374C955}" name="Audio">
           <FILE id="xGEfAX" name="VoxWorld.h" compile="0" resource="0" file="Source/VoxWorld.h"/>
           <FILE id="PGmAOc" name="VoxWorld.cpp" compile="1" resource="0" file="Source/VoxWorld.cpp"/>
-          <FILE id="tMqyvm" name="ConstantQEqualizer.hpp" compile="0" resource="0"
-                file="Source/ConstantQEqualizer.hpp"/>
+          <FILE id="jepeM4" name="FaustUtilities.h" compile="0" resource="0"
+                file="Source/FaustUtilities.h"/>
+          <FILE id="tMqyvm" name="FaustConstantQEqualizer.hpp" compile="0" resource="0"
+                file="Source/FaustConstantQEqualizer.hpp"/>
+          <FILE id="wESWtA" name="FaustDeEsser.hpp" compile="0" resource="0"
+                file="Source/FaustDeEsser.hpp"/>
         </GROUP>
       </GROUP>
     </GROUP>

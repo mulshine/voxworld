@@ -14,7 +14,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include "VoxWorld.h"
-#include "ConstantQEqualizer.hpp"
+#include "FaustConstantQEqualizer.hpp"
+#include "FaustDeEsser.hpp"
 
 //==============================================================================
 /**
@@ -67,15 +68,20 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     ConstantQEqualizer* eq;
-
+    DeEsser* deesser;
+    
     ConstantQEqualizer* getEQ(void){return eq;};
+    DeEsser* getDeEsser(void){return deesser;};
+    
+    
+    
 private:
     float rms;
     uint64 timer;
     float gain;
     bool start,ramp;
     
-    juce::AudioProcessorValueTreeState state;
+    ValueTree parameters;
     
    // AudioParameterFloat* gain;
     //==============================================================================

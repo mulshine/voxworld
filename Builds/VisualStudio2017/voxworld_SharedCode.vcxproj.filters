@@ -2817,7 +2817,13 @@
     <ClInclude Include="..\..\Source\VoxWorld.h">
       <Filter>voxworld\Source\VoxWorld\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\ConstantQEqualizer.hpp">
+    <ClInclude Include="..\..\Source\FaustUtilities.h">
+      <Filter>voxworld\Source\VoxWorld\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FaustConstantQEqualizer.hpp">
+      <Filter>voxworld\Source\VoxWorld\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FaustDeEsser.hpp">
       <Filter>voxworld\Source\VoxWorld\Audio</Filter>
     </ClInclude>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">

@@ -31,6 +31,7 @@ public:
 
     void clone(void);
     void declone(void);
+    void setNumClones(int newNumClones);
     
     void setLeft(void);
     void setRight(void);

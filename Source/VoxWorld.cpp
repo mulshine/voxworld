@@ -66,7 +66,7 @@ static float getFrequencyRatio(float midiTranspose);
 // ~ ~ ~ DELAY parts ~ ~ ~
 tTapeDelay delay[NUM_CHANNELS];
 float delayTime[NUM_CHANNELS] = {0.25, 0.225};
-float delayFeedback[NUM_CHANNELS] = {0.1, 0.125};
+float delayFeedback[NUM_CHANNELS] = {0.2, 0.15};
 
 // ~ ~ ~ VOCODER parts ~ ~ ~
 tVocoder vocoder;
@@ -108,12 +108,25 @@ float delayMixTarget = 0.0;
 
 
 int numClones = 0;
+int numSkyDots = 0;
+float X = 0.0;
+float Y = 0.0;
+
+float platformX[MAX_NUM_PLATFORMS];
+float platformY[MAX_NUM_PLATFORMS];
+int numPlatforms = 0;
 
 void    VoxWorld_init            (float sr, int bs)
 {
     sampleRate = sr;
     blockSize = bs;
     LEAF_init(&leaf, sampleRate, memory, LEAF_MEMSIZE, &getRandomFloat);
+    
+    for (int i = 0; i < MAX_NUM_PLATFORMS; i++)
+    {
+        platformX[i] = -1.0;
+        platformY[i] = -1.0;
+    }
     
     // ~ ~ ~ AUTOTUNE init ~ ~ ~
     tRetune_init(&retune, NUM_VOICES, 60, 1000, 1024, &leaf);
@@ -271,19 +284,101 @@ float dryPeak = 0.0;
 float autotunePeak = 0.5;
 float choirPeak = 1.0;
 
-void VoxWorld_setX(float X)
+void VoxWorld_setX(float newX)
 {
-    X = LEAF_clip(0.0, X, 1.0);
+    X = LEAF_clip(0.0, newX, 1.0);
 }
 
-void VoxWorld_setY(float Y)
+void VoxWorld_setY(float newY)
 {
-    Y = LEAF_clip(0.0, (Y-0.2)*1.25, 1.0);
+    Y = LEAF_clip(0.0, (newY-0.2)*1.25, 1.0);
     
     delayMixTarget = Y*0.5;
     tRamp_setDest(&delayMix, delayMixTarget);
     
 }
+
+float VoxWorld_getX(void)
+{
+    return X;
+}
+
+
+float VoxWorld_getY(void)
+{
+    return Y;
+}
+
+void VoxWorld_setNumPlatforms(int newNumPlatforms)
+{
+    numPlatforms = newNumPlatforms;
+}
+
+int VoxWorld_getNumPlatforms(void)
+{
+    return numPlatforms;
+}
+
+void VoxWorld_removePlatform(int which)
+{
+    for (int i = which; i < (MAX_NUM_PLATFORMS-1); i++)
+    {
+        platformX[i] = platformX[i+1];
+        platformY[i] = platformY[i+1];
+    }
+}
+
+void VoxWorld_setPlatformX(int which, float newX)
+{
+    DBG("new platform " + String(which) + " X: " + String(newX));
+    platformX[LEAF_clipInt(0, which, MAX_NUM_PLATFORMS)] = newX;
+}
+
+void VoxWorld_setPlatformY(int which, float newY)
+{
+    DBG("new platform " + String(which) + " Y: " + String(newY));
+    platformY[LEAF_clipInt(0, which, MAX_NUM_PLATFORMS)] = newY;
+}
+
+float VoxWorld_getPlatformX(int which)
+{
+    return platformX[which];
+}
+
+
+float VoxWorld_getPlatformY(int which)
+{
+    return platformY[which];
+}
+
+void VoxWorld_setNumSkyDot(int newNumSkyDots)
+{
+    DBG("new num sky dots: " + String(newNumSkyDots));
+    numSkyDots = newNumSkyDots;
+    
+    VoxWorld_setDelayFeedback(0, LEAF_clip(0.4, 0.4 + newNumSkyDots * (1.0/20.0)*0.5999, 0.9999));
+    VoxWorld_setDelayFeedback(1, VoxWorld_getDelayFeedback(0));
+    DBG("new delay feedback: " + String(VoxWorld_getDelayFeedback(0)));
+    
+}
+
+int VoxWorld_getNumSkyDot(void)
+{
+    return numSkyDots;
+}
+
+void VoxWorld_setNumClones(int newNumClones)
+{
+    DBG("new num clones: " + String(newNumClones));
+    numClones = LEAF_clipInt(0, newNumClones, 6);
+    
+}
+
+int VoxWorld_getNumClones(void)
+{
+    return numClones;
+}
+
 
 void VoxWorld_clone(void)
 {

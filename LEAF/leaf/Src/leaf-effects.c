@@ -1812,7 +1812,7 @@ void tFormantShifter_initToPool (tFormantShifter* const fsr, int order, tMempool
     fs->flp = 0.0f;
     fs->flpa = powf(0.001f, 10.0f * fs->invSampleRate);
     fs->fmute = 1.0f;
-    fs->fmutealph = 0.999;//powf(0.001f, 1.0f * fs->invSampleRate);
+    fs->fmutealph = powf(0.001f, 1.0f * fs->invSampleRate);
     fs->cbi = 0;
     tHighpass_initToPool(&fs->hp, 20.0f, mp);
     tHighpass_initToPool(&fs->hp2, 20.0f, mp);

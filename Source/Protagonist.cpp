@@ -49,6 +49,11 @@ void Protagonist::declone(void)
     DBG("numClones: " + String(numClones));
 }
 
+void Protagonist::setNumClones(int newNumClones)
+{
+    numClones = newNumClones;
+}
+
 void Protagonist::setRight(void)
 {
     dir = -1;

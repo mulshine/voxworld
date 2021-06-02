@@ -2176,7 +2176,9 @@
     <ClInclude Include="..\..\Source\Protagonist.h"/>
     <ClInclude Include="..\..\Source\Platform.h"/>
     <ClInclude Include="..\..\Source\VoxWorld.h"/>
-    <ClInclude Include="..\..\Source\ConstantQEqualizer.hpp"/>
+    <ClInclude Include="..\..\Source\FaustUtilities.h"/>
+    <ClInclude Include="..\..\Source\FaustConstantQEqualizer.hpp"/>
+    <ClInclude Include="..\..\Source\FaustDeEsser.hpp"/>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>
     <ClInclude Include="C:\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>

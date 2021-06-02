@@ -17,6 +17,8 @@
 
 // VoxWorld API
 
+#define MAX_NUM_PLATFORMS 10
+
 typedef enum VoxWorldMode
 {
     VoxWorldMode1,
@@ -45,10 +47,25 @@ void VoxWorld_setMode(VoxWorldMode mode);
 
 void VoxWorld_setX(float X);
 void VoxWorld_setY(float Y);
+float VoxWorld_getX(void);
+float VoxWorld_getY(void);
 
+
+void VoxWorld_setNumSkyDot(int newNumSkyDots);
+int VoxWorld_getNumSkyDot(void);
+
+void VoxWorld_setNumPlatforms(int newNumPlatforms);
+int VoxWorld_getNumPlatforms(void);
+void VoxWorld_removePlatform(int which);
+void VoxWorld_setPlatformX(int which, float X);
+void VoxWorld_setPlatformY(int which, float Y);
+float VoxWorld_getPlatformX(int which);
+float VoxWorld_getPlatformY(int which);
+
+void VoxWorld_setNumClones(int newNumClones);
+int VoxWorld_getNumClones(void);
 void VoxWorld_clone(void);
 void VoxWorld_declone(void);
-
 
 void VoxWorld_increaseDelayFeedback(void);
 void VoxWorld_decreaseDelayFeedback(void);

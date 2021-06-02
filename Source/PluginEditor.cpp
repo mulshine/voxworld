@@ -13,8 +13,9 @@
 #include "LEAFLink.h"	
 
 
-VoxWorldAudioProcessorEditor::VoxWorldAudioProcessorEditor(VoxWorldAudioProcessor& processor):
-AudioProcessorEditor (processor)
+VoxWorldAudioProcessorEditor::VoxWorldAudioProcessorEditor(VoxWorldAudioProcessor& processor, ValueTree& params):
+AudioProcessorEditor (processor),
+state(params)
 {
     setSize(width, height);
     startTimerHz(60);
@@ -38,22 +39,9 @@ AudioProcessorEditor (processor)
     addAndMakeVisible(mike);
     mike.setTopLeftPosition(0, height-mike.getHeight());
     
-    for (int i = 0; i < 1; i++)
-    {
-        platforms.add(new Platform());
-        Platform* newPlatform = platforms.getLast();
-        newPlatform->setBounds(width*0.5, height*0.5, (width/8.0), (width/8.0)*0.2);
-        newPlatform->addMouseListener(this, true);
-        newPlatform->toFront(false);
-        
-        addAndMakeVisible(newPlatform);
-    }
-    
     gradientY.addColour(0.0, Colour(0, 0, 0));
     gradientY.addColour(0.61, Colour(63, 182, 241));
     gradientY.addColour(1.0, Colour(244,200,216));
-    
-    
     
 }
 
@@ -115,12 +103,18 @@ void VoxWorldAudioProcessorEditor::timerCallback(void)
 {
     if (!hasKeyboardFocus(false)) grabKeyboardFocus();
     
-    // detect if on platform
     bool onPlatform = false;
     for (auto platform : platforms)
     {
-        Rectangle<int> bounds = platform->getBounds();
+        int which = platforms.indexOf(platform);
+        if (!platform->isMouseOverOrDragging())
+        {
+            platform->setTopLeftPosition(VoxWorld_getPlatformX(which), VoxWorld_getPlatformY(which));
+        }
         
+        // detect if on platform
+        Rectangle<int> bounds = platform->getBounds();
+    
         if (((mike.getX()+mike.getWidth()/2+mike.getCenterBoxSize()/2) >= bounds.getX()) &&
             ((mike.getX()+mike.getWidth()/2-mike.getCenterBoxSize()/2) <= (bounds.getX()+bounds.getWidth())))
         {
@@ -132,23 +126,59 @@ void VoxWorldAudioProcessorEditor::timerCallback(void)
         
     }
     
-    
+    // Y processing
     float newY = mike.getY() + (onPlatform ? 0.0 : ((height - mike.getY()) * 0.004)); // better model for gravity (currently slew-based)
     newY = LEAF_clip(-mike.getHeight()*0.5, newY+((moveY>0)?-5:(!onPlatform && (moveY<0)?5:0)), height-mike.getHeight()*0.5);
-    
-    
     mikeY = (height-(newY+mike.getHeight()*0.5))/height;
     VoxWorld_setY(mikeY);
     
+    // X processing
     float newX = LEAF_clip(-mike.getWidth()*0.5, mike.getX()+((moveX>0)?5:((moveX<0)?-5:0)), width-mike.getWidth()*0.5);
-    VoxWorld_setX((newX+mike.getWidth()*0.5)/getWidth());
-    
+    mikeX = (newX+mike.getWidth()*0.5)/getWidth();
+    VoxWorld_setX(mikeX);
 
     mike.setTopLeftPosition(newX, newY);
     
-    
     if (moveX>0) mike.setRight();
     else if (moveX<0) mike.setLeft();
+    
+    mike.setNumClones(VoxWorld_getNumClones());
+    
+    int numDots = VoxWorld_getNumSkyDot();
+    
+    if (dots.size() < LEAF_clip(0, numDots, 25))
+    {
+        for (int i = 0; i < numDots-dots.size(); i++)
+        {
+            int x = getRandomFloat()*width, y = getRandomFloat()*height;
+            dots.add(new SkyDot(x, y));
+            SkyDot* dot = dots.getLast();
+            
+            dot->setCentrePosition(x, y);
+            addAndMakeVisible(dot);
+        
+            dot->toBehind(&mike);
+        }
+    }
+    
+    int numPlatforms = VoxWorld_getNumPlatforms();
+    
+    if (platforms.size() != LEAF_clip(0, numPlatforms, MAX_NUM_PLATFORMS))
+    {
+        platforms.clear();
+        for (int i = 0; i < numPlatforms; i++)
+        {
+            platforms.add(new Platform());
+            Platform* newPlatform = platforms.getLast();
+            
+            newPlatform->setBounds(VoxWorld_getPlatformX(i), VoxWorld_getPlatformY(i), (width/8.0), (width/8.0)*0.2);
+            newPlatform->addMouseListener(this, true);
+            newPlatform->toFront(false);
+            
+            addAndMakeVisible(newPlatform);
+        }
+    }
+    
         
     repaint();
 }
@@ -180,15 +210,53 @@ void VoxWorldAudioProcessorEditor::mouseUp (const MouseEvent& event)
             DBG("mouse up on PRO");
             if (ModifierKeys::getCurrentModifiers().isShiftDown())
             {
-                mike.declone();
                 VoxWorld_declone();
             }
             else
             {
-                mike.clone();
                 VoxWorld_clone();
             }
+            
+            state.setProperty("numclones", VoxWorld_getNumClones(), nullptr);
         }
+    }
+    else if (platforms.contains((Platform*)event.originalComponent))
+    {
+        int which = platforms.indexOf((Platform*)event.originalComponent);
+        
+        if (ModifierKeys::getCurrentModifiers().isShiftDown())
+        {
+            VoxWorld_removePlatform(which);
+            platforms.remove(which);
+            
+            VoxWorld_setNumPlatforms(platforms.size());
+            
+            for (int i = 0 ; i < MAX_NUM_PLATFORMS; i++)
+            {
+                state.removeProperty("platformX_"+String(i), nullptr);
+                state.removeProperty("platformY_"+String(i), nullptr);
+                float x = VoxWorld_getPlatformX(i);
+                float y = VoxWorld_getPlatformY(i);
+                if ((x >= 0.0) && (y >= 0.0))
+                {
+                    state.setProperty("platformX_"+String(i), x, nullptr);
+                    state.setProperty("platformY_"+String(i), y, nullptr);
+                }
+            }
+        }
+        else
+        {
+            Platform* platform = platforms[which];
+            VoxWorld_setPlatformX(which, platform->getX());
+            VoxWorld_setPlatformY(which, platform->getY());
+            
+            state.setProperty("platformX_"+String(which), VoxWorld_getPlatformX(which), nullptr);
+            state.setProperty("platformY_"+String(which), VoxWorld_getPlatformY(which), nullptr);
+        }
+        
+        VoxWorld_setNumPlatforms(platforms.size());
+        state.setProperty("numplatforms", VoxWorld_getNumPlatforms(), nullptr);
+        
     }
     else
     {
@@ -200,8 +268,6 @@ void VoxWorldAudioProcessorEditor::mouseUp (const MouseEvent& event)
                 {
                     removeChildComponent(dots.getLast());
                     dots.removeLast();
-                    
-                    VoxWorld_decreaseDelayFeedback();
                 }
             }
             else
@@ -215,10 +281,11 @@ void VoxWorldAudioProcessorEditor::mouseUp (const MouseEvent& event)
                     addAndMakeVisible(dot);
                 
                     dot->toBehind(&mike);
-                    VoxWorld_increaseDelayFeedback();
                 }
             }
             
+            VoxWorld_setNumSkyDot(dots.size());
+            state.setProperty("numskydot", VoxWorld_getNumSkyDot(), nullptr);
         }
     }
 }
@@ -248,6 +315,24 @@ bool VoxWorldAudioProcessorEditor::keyPressed (const KeyPress& key, Component* c
         moveY = -1;
         arrowKeyDown[DOWN_KEY] = true;
     }
+    else if (keyCode == KeyPress::spaceKey)
+    {
+        platforms.add(new Platform());
+        Platform* newPlatform = platforms.getLast();
+        newPlatform->setBounds(width*0.5-(width/8.0)*0.5, height*0.5, (width/8.0), (width/8.0)*0.2);
+        newPlatform->addMouseListener(this, true);
+        newPlatform->toFront(false);
+        
+        VoxWorld_setNumPlatforms(platforms.size());
+        
+        int which = platforms.indexOf(newPlatform);
+        VoxWorld_setPlatformX(which, newPlatform->getX());
+        VoxWorld_setPlatformY(which, newPlatform->getY());
+        
+        
+        addAndMakeVisible(newPlatform);
+    }
+
     return false;
 }
 

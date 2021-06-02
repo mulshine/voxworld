@@ -13,6 +13,28 @@
 
 #include "UIComponent.h"
 
+//==============================================================================
+
+VoxWorldAudioProcessor::VoxWorldAudioProcessor()
+#ifndef JucePlugin_PreferredChannelConfigurations
+: AudioProcessor (BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+.withInput  ("Input",  AudioChannelSet::stereo(), true)
+#endif
+.withOutput ("Output", AudioChannelSet::stereo(), true)
+#endif
+          ),
+parameters(ValueTree("VOXWORLD"))
+#endif
+{
+    
+}
+
+VoxWorldAudioProcessor::~VoxWorldAudioProcessor()
+{
+
+}
 
 //==============================================================================
 void VoxWorldAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
@@ -23,6 +45,9 @@ void VoxWorldAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     ramp = false;
     
     eq = new ConstantQEqualizer(sampleRate);
+    
+    deesser = new DeEsser(sampleRate);
+    
     VoxWorld_init(sampleRate, samplesPerBlock);
 }
 
@@ -64,17 +89,18 @@ void VoxWorldAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
         const float* inPointerL = buffer.getReadPointer (0);
         //const float* inPointerR = buffer.getReadPointer (1);
          
-         float* outPointerL = buffer.getWritePointer( 0);
-         float* outPointerR = buffer.getWritePointer( 1);
+        float* outPointerL = buffer.getWritePointer( 0);
+        float* outPointerR = buffer.getWritePointer( 1);
+
         
-         eq->compute(buffer.getNumSamples(), inPointerL, outPointerL);
-         
-         for (int samp = 0; samp < buffer.getNumSamples(); ++samp)
-         {
-             float* tick = VoxWorld_tick( outPointerL[samp] );
-             outPointerL[samp] = tick[0];
-             outPointerR[samp] = tick[1];
-         }
+        eq->compute(buffer.getNumSamples(), inPointerL, outPointerL);
+        //deesser->compute(buffer.getNumSamples(), inPointerL, outPointerL);
+
+        for (int samp = 0; samp < buffer.getNumSamples(); ++samp) {
+            float* tick = VoxWorld_tick( outPointerL[samp] );
+            outPointerL[samp] = tick[0];
+            outPointerR[samp] = tick[1];
+        }
     }
     else if (totalNumInputChannels == 1)
     {
@@ -84,8 +110,7 @@ void VoxWorldAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
         
          eq->compute(buffer.getNumSamples(), inPointerL, outPointerL);
          
-         for (int samp = 0; samp < buffer.getNumSamples(); ++samp)
-         {
+         for (int samp = 0; samp < buffer.getNumSamples(); ++samp) {
              float* tick = VoxWorld_tick( outPointerL[samp] );
              outPointerL[samp] = (tick[0]+tick[1]) * 0.5;
          }
@@ -95,31 +120,6 @@ void VoxWorldAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer
         
     }
    
-}
-
-//==============================================================================
-
-VoxWorldAudioProcessor::VoxWorldAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
-: AudioProcessor (BusesProperties()
-    #if ! JucePlugin_IsMidiEffect
-        #if ! JucePlugin_IsSynth
-    .withInput  ("Input",  AudioChannelSet::stereo(), true)
-        #endif
-    .withOutput ("Output", AudioChannelSet::stereo(), true)
-    #endif
-                  )
-#endif
-,state (*this, nullptr, "parameters",
-        { std::make_unique<AudioParameterInt> ("platformX",  "Platform X", 0, 1500, 600),
-          std::make_unique<AudioParameterInt> ("platformY", "Platform Y", 0, 1000, 500),
-          std::make_unique<AudioParameterInt> ("numDots", "Number of Dots", 0, 25, 0)  })
-{
-}
-
-VoxWorldAudioProcessor::~VoxWorldAudioProcessor()
-{
-
 }
 
 //==============================================================================
@@ -211,7 +211,7 @@ bool VoxWorldAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* VoxWorldAudioProcessor::createEditor()
 {
-    return new VoxWorldAudioProcessorEditor (*this);
+    return new VoxWorldAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
@@ -220,12 +220,51 @@ void VoxWorldAudioProcessor::getStateInformation (MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
+    auto xml = parameters.createXml();
+    DBG("~ ~ ~ ~ ~ GET THIS: \n" + xml->toString());
+    copyXmlToBinary(*xml, destData);
 }
 
 void VoxWorldAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<XmlElement> xml (getXmlFromBinary(data, sizeInBytes));
+    
+    if (xml != nullptr)
+    {
+        DBG("~ ~ ~ ~ ~ SET THIS: \n" + xml->toString());
+        parameters = ValueTree::fromXml(*xml);
+        
+        parameters.removeProperty("platformX", nullptr);
+        parameters.removeProperty("platformY", nullptr);
+        
+        auto numPlatforms = parameters.getProperty("numplatforms");
+
+        VoxWorld_setNumPlatforms(numPlatforms ? (int)numPlatforms : 0);
+        
+        for (int i = 0; i < VoxWorld_getNumPlatforms(); i++)
+        {
+            auto platX = parameters.getProperty("platformX_"+String(i));
+            auto platY = parameters.getProperty("platformY_"+String(i));
+            
+            if (platX && platY)
+            {
+                VoxWorld_setPlatformX(i, platX);
+                VoxWorld_setPlatformY(i, platY);
+            }
+            else
+            {
+                parameters.removeProperty("platformX_"+String(i), nullptr);
+                parameters.removeProperty("platformY_"+String(i), nullptr);
+                VoxWorld_setPlatformX(i, -1.0);
+                VoxWorld_setPlatformY(i, -1.0);
+            }
+        }
+        
+        VoxWorld_setNumClones(parameters.getProperty("numclones"));
+        VoxWorld_setNumSkyDot(parameters.getProperty("numskydot"));
+    }
 }
 
 //==============================================================================
